@@ -1,0 +1,89 @@
+{
+  "name": "checkoutheader",
+  "displayName": "CheckoutHeader",
+  "description": "Useful header for managing files on a live server along side SFTP extension, Displays ",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "build": "https://github.com/M4DM0NK3Y/CheckoutHeader-VSCode-Extension.git"
+  },
+  "engines": {
+    "vscode": "^1.31.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./src/extension.js",
+  "contributes": {
+    "configuration":{
+        "properties":{
+            "CheckoutHeader.Username": {
+                "type": "string",
+                "description": "Username used to populate CheckoutHeaders!"
+            },
+            "CheckoutHeader.Email": {
+                "type": "string",
+                "description": "Email address used to populate CheckoutHeaders!"
+            }
+        }
+
+    },
+    "commands": [
+      {
+        "command": "CheckoutHeader.new",
+        "title": "CheckoutHeader: Insert Fresh Header",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "CheckoutHeader.out",
+        "title": "CheckoutHeader: Insert Fresh Header",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "CheckoutHeader.in",
+        "title": "CheckoutHeader: Insert Fresh Header",
+        "when": "editorTextFocus"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "CheckoutHeader.new",
+        "key": "ctrl+alt+e",
+        "mac": "cmd+alt+e",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "CheckoutHeader.out",
+        "key": "ctrl+alt+o",
+        "mac": "cmd+alt+o",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "CheckoutHeader.in",
+        "key": "ctrl+alt+i",
+        "mac": "cmd+alt+i",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  
+  "scripts": {
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test",
+    "compile": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "typescript": "^3.3.1",
+    "vscode": "^1.1.28",
+    "eslint": "^5.13.0",
+    "@types/node": "^10.12.21",
+    "@types/mocha": "^2.2.42"
+  },
+  "dependencies": {
+    "moment": "^2.24.0",
+    "vscode": "^1.1.29"
+  }
+}
