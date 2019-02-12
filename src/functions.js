@@ -42,16 +42,19 @@ const getHeaderStatus = (header) => {
     return status[2];
 };
 
+const getHeaderHistory = (header) => {
+    console.log('Path: getHeaderHistory');
+    var history ={};
+    //17:01
+    return history;
+};
+
 const getCurrentHeader = () =>{
     console.log('Path: checkActiveHeader');
     var currentHeader = vscode.window.activeTextEditor.document
         .getText(new vscode.Range(0,0,10,100));
     return(currentHeader);
 };
-
-// console.log("Header: \n" + currentHeader);
-
-// console.log(currentHeader.match(/(\**)(.*)(\*)$/gm));
 
 const insertNewHeader = () => {
     console.log('Path: insertNewHeader');
