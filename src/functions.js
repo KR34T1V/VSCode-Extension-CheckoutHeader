@@ -17,39 +17,55 @@ const padHeaderInfo = (string, padding, minSize) => {
 const populateCheckOutHeader = (template) => {
     template = template.replace(/(\$FILENAME)(_*)/m, padHeaderInfo(getFileName(), " ", 38));
     template = template.replace(/(\$TimeLastOut)(_*)/m,padHeaderInfo(moment()
-        .format('YYYY/MM/DD, hh:mm:ssa'), " ", 35));
-    template = template.replace(/(\$LastOutBy)(_*)/m, padHeaderInfo(getUserName(), " ", 38));
+        .format('YYYY/MM/DD, hh:mm:ss a'), " ", 35));
+    template = template.replace(/(\$LastOutBy)(_*)/m, padHeaderInfo(getUserEmail(), " ", 38));
     return template;
 };
 
 const populateCheckInHeader = (template) => {
     template = template.replace(/(\$FILENAME)(_*)/m, padHeaderInfo(getFileName(), " ", 38));
     template = template.replace(/(\$TimeLastIn)(_*)/m,padHeaderInfo(moment()
-        .format('YYYY/MM/DD, hh:mm:ssa'), " ", 35));
-    template = template.replace(/(\$LastInBy)(_*)/m, padHeaderInfo(getUserName(), " ", 38));
+        .format('YYYY/MM/DD, hh:mm:ss a'), " ", 35));
+    template = template.replace(/(\$LastInBy)(_*)/m, padHeaderInfo(getUserEmail(), " ", 38));
     return template;
 };
 
 const populateEmptyHeader = (template) => {
     console.log('Path: populateHeader');
     template = template.replace(/(\$FILENAME)(_*)/m, padHeaderInfo(getFileName(), " ", 38));
-    template = template.replace(/(\$AUTHOR)(_*)/m, padHeaderInfo(getUserName(), " ", 38));
     return template;
+};
+
+const getHeaderStatus = (header) => {
+    console.log('Path: getHeaderStatus');
+    var status = header.match(/(\|File Checked\|)(.)(\|)/);
+    return status[2];
 };
 
 const getCurrentHeader = () =>{
     console.log('Path: checkActiveHeader');
     var currentHeader = vscode.window.activeTextEditor.document
         .getText(new vscode.Range(0,0,10,100));
-    console.log("Header: \n" + currentHeader);
-    console.log(currentHeader.match(/^(.*)(File:)(.*)(\*)$/m));
+    return(currentHeader);
 };
+
+// console.log("Header: \n" + currentHeader);
+
+// console.log(currentHeader.match(/(\**)(.*)(\*)$/gm));
 
 const insertNewHeader = () => {
     console.log('Path: insertNewHeader');
     vscode.window.activeTextEditor.edit((editor) => {
         editor.insert(new vscode.Position(0, 0), populateEmptyHeader(head.blank).substring(1));
     });
+};
+
+const checkOutHeader = () => {
+    console.log('Path: checkOutHeader');
+    getHeaderStatus(getCurrentHeader());
+};
+
+const checkInHeader = () => {
 };
 
 const getFileName = () => {
@@ -69,9 +85,13 @@ const getUserName = () => {
 
 const getUserEmail = () => {
     console.log('Path: getUserEmail');
-    return vscode.workspace.getConfiguration('CheckoutHeader').get('email');
+    var name = vscode.workspace.getConfiguration('CheckoutHeader').get('email') ||
+        'CheckoutHeader.email not set';
+    return name;
 };
 
 module.exports = {
-    insertNewHeader
+    insertNewHeader,
+    checkOutHeader,
+    checkInHeader
 };

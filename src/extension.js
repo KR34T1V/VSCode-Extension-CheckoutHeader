@@ -10,8 +10,13 @@ function activate(context) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	console.log('CheckoutHeader: Now active!');
     
-	let blankHeader = vscode.commands.registerCommand('CheckoutHeader.new', ft.insertNewHeader);
+    let blankHeader = vscode.commands.registerCommand('CheckoutHeader.new', ft.insertNewHeader);
+	let checkInHeader = vscode.commands.registerCommand('CheckoutHeader.in', ft.checkInHeader);
+	let checkOutHeader = vscode.commands.registerCommand('CheckoutHeader.out', ft.checkOutHeader);
+    
 	context.subscriptions.push(blankHeader);
+	context.subscriptions.push(checkInHeader);
+	context.subscriptions.push(checkOutHeader);
 }
 exports.activate = activate;
 
