@@ -62,7 +62,9 @@ const getFileName = () => {
 
 const getUserName = () => {
     console.log('Path: getUserName');
-    return vscode.workspace.getConfiguration('CheckoutHeader').get('username');
+    var name = vscode.workspace.getConfiguration('CheckoutHeader').get('username') ||
+        'CheckoutHeader.name not set';
+    return name;
 };
 
 const getUserEmail = () => {
