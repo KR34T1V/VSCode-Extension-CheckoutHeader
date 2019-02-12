@@ -18,18 +18,17 @@
   ],
   "main": "./src/extension.js",
   "contributes": {
-    "configuration":{
-        "properties":{
-            "CheckoutHeader.Username": {
-                "type": "string",
-                "description": "Username used to populate CheckoutHeaders!"
-            },
-            "CheckoutHeader.Email": {
-                "type": "string",
-                "description": "Email address used to populate CheckoutHeaders!"
-            }
+    "configuration": {
+      "properties": {
+        "CheckoutHeader.username": {
+          "type": "string",
+          "description": "Username used to populate CheckoutHeaders!"
+        },
+        "CheckoutHeader.email": {
+          "type": "string",
+          "description": "Email address used to populate CheckoutHeaders!"
         }
-
+      }
     },
     "commands": [
       {
@@ -69,7 +68,6 @@
       }
     ]
   },
-  
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "node ./node_modules/vscode/bin/test",
