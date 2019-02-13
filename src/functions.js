@@ -11,18 +11,34 @@ const padHeaderInfo = (string, padding, minSize) => {
     while(string.length < minSize){
         string += padding;
     };
+    if (string.length > minSize)
+        string = string.substring(0, minSize);
     return string;
 };
 
 const populateCheckOutHeader = (template, history) => {
-    template = template.replace(/(\$FILENAME)(_*)/m, padHeaderInfo(getFileName(), " ", 38));
-    template = template.replace(/(\$TimeLastOut)(_*)/m,padHeaderInfo(moment()
-        .format('YYYY/MM/DD, hh:mm:ss a'), " ", 35));
-    template = template.replace(/(\$LastOutBy)(_*)/m, padHeaderInfo(getUserEmail(), " ", 38));
+    console.log('Path: populateCheckoutHeader');
+    template = template.replace(/(\$FILENAME)(_*)/, padHeaderInfo(getFileName(), " ", 38));
+
+    template = template.replace(/(\$TimeLastIn)(_*)/,padHeaderInfo(history.timeIn," ", 35));
+    template = template.replace(/(\$LastInBy)(_*)/, padHeaderInfo(history.inBy, " ", 35));
+
+    template = template.replace(/(\$TimeLastOut)(_*)/,padHeaderInfo(moment()
+        .format('YYYY/MM/DD, hh:mm:ss a'), " ", 34));
+    template = template.replace(/(\$LastOutBy)(_*)/, padHeaderInfo(getUserEmail(), " ", 34));
     return template;
 };
 
 const populateCheckInHeader = (template, history) => {
+    console.log('Path: populateCheckoutHeader');
+    template = template.replace(/(\$FILENAME)(_*)/, padHeaderInfo(getFileName(), " ", 38));
+
+    template = template.replace(/(\$TimeLastIn)(_*)/,padHeaderInfo(moment()
+    .format('YYYY/MM/DD, hh:mm:ss a'), " ", 35));
+    template = template.replace(/(\$LastInBy)(_*)/, padHeaderInfo(getUserEmail(), " ", 35));
+    
+    template = template.replace(/(\$TimeLastOut)(_*)/,padHeaderInfo(history.timeOut," ", 34));
+    template = template.replace(/(\$LastOutBy)(_*)/, padHeaderInfo(history.outBy, " ", 34));
     return template;
 };
 
@@ -103,7 +119,6 @@ const getHeaderHistory = (header) => {
     return history;
 };
 
-
 const insertNewHeader = () => {
     console.log('Path: insertNewHeader');
     console.log("Does Exist: " + headerExists(getCurrentHeader()));
@@ -114,12 +129,54 @@ const insertNewHeader = () => {
 
 const checkOutHeader = () => {
     console.log('Path: checkOutHeader');
-    console.log(getCurrentHeader());
-    console.log("Does Exist: " + headerExists(getCurrentHeader()));
-    //console.log(getHeaderHistory(getCurrentHeader()));
+    var header = getCurrentHeader();
+    
+    if (headerExists(header)){
+        //Check Perms and replace data
+        var history = getHeaderHistory(header);
+
+        if (history.status != 2){
+            //edit and replace header
+            vscode.window.activeTextEditor.edit((editor) => {
+            editor.insert(new vscode.Position(0, 0), populateCheckOutHeader(head.out, history).substring(1));
+            });
+        }
+        else{
+            //do error
+            vscode.window.
+                showInformationMessage('This File Is already Checked out\nby: "' 
+                    + history.outBy + '"\non: < ' + history.timeOut +'>', 'Override', 'Cancel');
+        };
+    }
+    else {
+        insertNewHeader();
+    }
 };
 
 const checkInHeader = () => {
+    console.log('Path: checkInHeader');
+    var header = getCurrentHeader();
+    
+    if (headerExists(header)){
+        //Check Perms and replace data
+        var history = getHeaderHistory(header);
+
+        if (history.status != 1){
+            //edit and replace header
+            vscode.window.activeTextEditor.edit((editor) => {
+            editor.insert(new vscode.Position(0, 0), populateCheckInHeader(head.in, history).substring(1));
+            });
+        }
+        else{
+            //do error
+            vscode.window.
+                showInformationMessage('This File Is already Checked In\nby: "' 
+                    + history.outBy + '"\non: < ' + history.timeOut +'>', 'Override', 'Cancel');
+        };
+    }
+    else {
+        insertNewHeader();
+    }
 };
 
 const headerExists = (header) => {
