@@ -20,9 +20,9 @@
   "contributes": {
     "configuration": {
       "properties": {
-        "CheckoutHeader.username": {
-          "type": "string",
-          "description": "Username used to populate CheckoutHeaders!"
+        "CheckoutHeader.sftp": {
+          "type": "boolean",
+          "description": "Are you using SFTP extension with CheckoutHeaders?"
         },
         "CheckoutHeader.email": {
           "type": "string",

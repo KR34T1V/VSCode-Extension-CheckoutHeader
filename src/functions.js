@@ -6,54 +6,87 @@ const moment = require('moment');
 const head   = require('./templates');
 const lang   = require('./comments');
 
+//Variables
+const activeTextEditor = vscode.window.activeTextEditor;
+const document = activeTextEditor.document;
+const languageId = document.languageId;
+
 //Functions
-const padHeaderInfo = (string, padding, minSize) => {
-    console.log("Path: padHeaderInfo");
-    while(string.length < minSize){
-        string += padding;
-    };
-    if (string.length > minSize)
-        string = string.substring(0, minSize);
-    return string;
+//a
+//b
+//c
+const checkOutHeader = (history) => {
+    activeTextEditor.edit((editor) => {
+        editor.replace(new vscode.Range(0,0,10,100), commentHeader(
+            populateCheckOutHeader(head.out, history).substring(1), languageId));
+    });
+    sftpSyncSave();
 };
 
-const populateCheckOutHeader = (template, history) => {
-    console.log('Path: populateCheckoutHeader');
-    template = template.replace(/(\$FILENAME)(_*)/, padHeaderInfo(getFileName(), " ", 38));
+const checkOutHandler = () => {
+    console.log('Path: checkOutHandler');
+    var header = getCurrentHeader();
+        
+    if (headerExists(header)){
+        var history = getHeaderHistory(header);
 
-    template = template.replace(/(\$TimeLastIn)(_*)/,padHeaderInfo(history.timeIn," ", 35));
-    template = template.replace(/(\$LastInBy)(_*)/, padHeaderInfo(history.inBy, " ", 35));
-
-    template = template.replace(/(\$TimeLastOut)(_*)/,padHeaderInfo(moment()
-        .format('YYYY/MM/DD, hh:mm:ss a'), " ", 34));
-    template = template.replace(/(\$LastOutBy)(_*)/, padHeaderInfo(getUserEmail(), " ", 34));
-    return template;
+        if (history.status != 2){
+                checkOutHeader(history);
+        }
+        else {
+            vscode.window
+                .showInformationMessage('This File Is already Checked Out\nby: "' 
+                    + history.outBy + '"\non: < ' + history.timeOut +'>', 'Override', 'Cancel')
+                    .then((select) => {
+                        if (select == 'Override')
+                            checkOutHeader(history);
+                    });
+        }
+    }
+    else {
+        activeTextEditor.edit((editor) => {
+            editor.insert(new vscode.Position(0,0), commentHeader(
+                populateCheckOutHeader(head.out).substring(1), languageId) +'\n');
+        });
+        sftpSyncSave();
+    }
 };
 
-const populateCheckInHeader = (template, history) => {
-    console.log('Path: populateCheckoutHeader');
-    template = template.replace(/(\$FILENAME)(_*)/, padHeaderInfo(getFileName(), " ", 38));
-
-    template = template.replace(/(\$TimeLastIn)(_*)/,padHeaderInfo(moment()
-    .format('YYYY/MM/DD, hh:mm:ss a'), " ", 35));
-    template = template.replace(/(\$LastInBy)(_*)/, padHeaderInfo(getUserEmail(), " ", 35));
-    
-    template = template.replace(/(\$TimeLastOut)(_*)/,padHeaderInfo(history.timeOut," ", 34));
-    template = template.replace(/(\$LastOutBy)(_*)/, padHeaderInfo(history.outBy, " ", 34));
-    return template;
+const checkInHeader = (history) => {
+    activeTextEditor.edit((editor) => {
+        editor.replace(new vscode.Range(0,0,10,100), commentHeader(
+            populateCheckInHeader(head.in, history).substring(1), languageId));
+    });
+    sftpSyncSave();
 };
 
-const populateEmptyHeader = (template) => {
-    console.log('Path: populateHeader');
-    template = template.replace(/(\$FILENAME)(_*)/, padHeaderInfo(getFileName(), " ", 38));
+const checkInHandler = () => {
+    console.log('Path: checkInHandler');
+    var header = getCurrentHeader();
+        
+    if (headerExists(header)){
+        var history = getHeaderHistory(header);
 
-    template = template.replace(/(\$TimeLastIn)(_*)/,padHeaderInfo("<Never>"," ", 35));
-    template = template.replace(/(\$LastInBy)(_*)/, padHeaderInfo("", " ", 35));
-
-    template = template.replace(/(\$TimeLastOut)(_*)/,padHeaderInfo("<Never>"," ", 34))
-    template = template.replace(/(\$LastOutBy)(_*)/, padHeaderInfo("", " ", 34));
-
-    return template;
+        if (history.status != 1){
+                checkInHeader(history);
+        }
+        else {
+            vscode.window
+                .showInformationMessage('This File Is already Checked In\nby: "' 
+                    + history.inBy + '"\non: < ' + history.timeIn +'>', 'Override', 'Cancel')
+                    .then((select) => {
+                        if (select == 'Override')
+                            checkInHeader(history);
+                    });
+        }
+    }
+    else {
+        activeTextEditor.edit((editor) => {
+            editor.insert(new vscode.Position(0,0), commentHeader(
+                populateCheckInHeader(head.in).substring(1), languageId) +'\n');
+        });
+        sftpSyncSave();
+    }
 };
 
 const commentHeader = (template, languageId) => {
@@ -63,9 +96,40 @@ const commentHeader = (template, languageId) => {
   
     template = template.replace(new RegExp(`^(.*)`, 'gm'),
       start + '$1' + stop);
-    template += '\n';
+    //template += '\n';
     return template;
-  }
+};
+//d
+//e
+//f
+//g
+const getCurrentHeader = () =>{
+    console.log('Path: getCurrentHeader');
+    var currentHeader = vscode.window.activeTextEditor.document
+        .getText(new vscode.Range(0,0,10,100));
+    return(currentHeader);
+};
+
+const getFileName = () => {
+    var activeTextEditor = vscode.window.activeTextEditor;
+    var activeDocument   = activeTextEditor.document;
+
+    console.log('Path: getFileName');
+    return path.basename(activeDocument.fileName);
+};
+
+const getHeaderConfig = () => {
+    console.log('Path: getUserName');
+    var file = vscode.workspace.getConfiguration('CheckoutHeader');
+    return file;
+};
+
+const getUserEmail = () => {
+    console.log('Path: getUserEmail');
+    var name = getHeaderConfig().get('email') ||
+        'CheckoutHeader.email not set';
+    return name;
+};
 
 const getHistoryFileName = (header) => {
     console.log('Path: getHistoryFileName');
@@ -130,113 +194,128 @@ const getHeaderHistory = (header) => {
     history.outBy = getHistoryOutBy(header);
     return history;
 };
-
-const insertNewHeader = () => {
-    console.log('Path: insertNewHeader');
-    console.log("Does Exist: " + headerExists(getCurrentHeader()));
-    var languageId = vscode.window.activeTextEditor.document.languageId;
-    vscode.window.activeTextEditor.edit((editor) => {
-        editor.insert(new vscode.Position(0, 0), commentHeader(populateEmptyHeader(head.blank).substring(1), languageId));
-    });
-};
-
-const checkOutHeader = () => {
-    console.log('Path: checkOutHeader');
-    var header = getCurrentHeader();
-    
-    if (headerExists(header)){
-        //Check Perms and replace data
-        var languageId = vscode.window.activeTextEditor.document.languageId;
-        var history = getHeaderHistory(header);
-
-        if (history.status != 2){
-            //edit and replace header
-            vscode.window.activeTextEditor.edit((editor) => {
-            editor.insert(new vscode.Position(0, 0), commentHeader(
-                populateCheckOutHeader(head.out, history).substring(1),languageId));
-            });
-        }
-        else{
-            //do error
-            vscode.window.
-                showInformationMessage('This File Is already Checked out\nby: "' 
-                    + history.outBy + '"\non: < ' + history.timeOut +'>', 'Override', 'Cancel')
-                    .then(value => {
-                        console.log(value +' Was Selected!');
-                        //Save and sync
-                        //or do nothing
-                    });
-        };
-    }
-    else {
-        insertNewHeader();
-    }
-};
-
-const checkInHeader = () => {
-    console.log('Path: checkInHeader');
-    var languageId = vscode.window.activeTextEditor.document.languageId;
-    var header = getCurrentHeader();
-    
-    if (headerExists(header)){
-        //Check Perms and replace data
-        var history = getHeaderHistory(header);
-
-        if (history.status != 1){
-            //edit and replace header
-            vscode.window.activeTextEditor.edit((editor) => {
-            editor.insert(new vscode.Position(0, 0), commentHeader(
-                populateCheckInHeader(head.in, history).substring(1), languageId));
-            });
-        }
-        else{
-            //do error
-            vscode.window.
-                showInformationMessage('This File Is already Checked In\nby: "' 
-                    + history.inBy + '"\non: < ' + history.timeIn +'>', 'Override', 'Cancel');
-        };
-    }
-    else {
-        insertNewHeader();
-    }
-};
-
+//h
 const headerExists = (header) => {
     var exists = getHistoryFileStatus(header);
     if (exists != null)
         return 1;
     return (0);
 };
-
-const getCurrentHeader = () =>{
-    console.log('Path: getCurrentHeader');
-    var currentHeader = vscode.window.activeTextEditor.document
-        .getText(new vscode.Range(0,0,10,100));
-    return(currentHeader);
+//i
+const insertNewHeader = () => {
+    console.log('Path: insertNewHeader');
+    console.log("Does Exist: " + headerExists(getCurrentHeader()));
+    var languageId = vscode.window.activeTextEditor.document.languageId;
+    supportHeaderLanguage(languageId);
+    vscode.window.activeTextEditor.edit((editor) => {
+        editor.insert(new vscode.Position(0, 0), commentHeader(populateEmptyHeader(head.blank).substring(1), languageId));
+    });
 };
-const getFileName = () => {
-    var activeTextEditor = vscode.window.activeTextEditor;
-    var activeDocument   = activeTextEditor.document;
-
-    console.log('Path: getFileName');
-    return path.basename(activeDocument.fileName);
+//j
+//k
+//l
+//m
+//n
+//o
+//p
+const padHeaderInfo = (string, padding, minSize) => {
+    console.log("Path: padHeaderInfo");
+    while(string.length < minSize){
+        string += padding;
+    };
+    if (string.length > minSize)
+        string = string.substring(0, minSize);
+    return string;
 };
 
-const getHeaderConfig = () => {
-    console.log('Path: getUserName');
-    var file = vscode.workspace.getConfiguration('CheckoutHeader');
-    return file;
+const populateCheckOutHeader = (template, history) => {
+    console.log('Path: populateCheckoutHeader');
+    template = template.replace(/(\$FILENAME)(_*)/, padHeaderInfo(getFileName(), " ", 38));
+    if (history && history.timeIn.length > 0 && history.inBy.length > 0){
+        template = template.replace(/(\$TimeLastIn)(_*)/,padHeaderInfo(history.timeIn," ", 35));
+        template = template.replace(/(\$LastInBy)(_*)/, padHeaderInfo(history.inBy, " ", 35));
+    }
+    else {
+        template = template.replace(/(\$TimeLastIn)(_*)/,padHeaderInfo("<Never>"," ", 35));
+        template = template.replace(/(\$LastInBy)(_*)/, padHeaderInfo("", " ", 35));
+    }
+    template = template.replace(/(\$TimeLastOut)(_*)/,padHeaderInfo(moment()
+        .format('YYYY/MM/DD, hh:mm:ss a'), " ", 34));
+    template = template.replace(/(\$LastOutBy)(_*)/, padHeaderInfo(getUserEmail(), " ", 34));
+    return template;
 };
 
-const getUserEmail = () => {
-    console.log('Path: getUserEmail');
-    var name = getHeaderConfig().get('email') ||
-        'CheckoutHeader.email not set';
-    return name;
+const populateCheckInHeader = (template, history) => {
+    console.log('Path: populateCheckoutHeader');
+    template = template.replace(/(\$FILENAME)(_*)/, padHeaderInfo(getFileName(), " ", 38));
+
+    template = template.replace(/(\$TimeLastIn)(_*)/,padHeaderInfo(moment()
+    .format('YYYY/MM/DD, hh:mm:ss a'), " ", 35));
+    template = template.replace(/(\$LastInBy)(_*)/, padHeaderInfo(getUserEmail(), " ", 35));
+    if (history && history.timeOut.length > 0 && history.outBy.length > 0) {
+        template = template.replace(/(\$TimeLastOut)(_*)/,padHeaderInfo(history.timeOut," ", 34));
+        template = template.replace(/(\$LastOutBy)(_*)/, padHeaderInfo(history.outBy, " ", 34));
+    }
+    else {
+        template = template.replace(/(\$TimeLastOut)(_*)/,padHeaderInfo("<Never>"," ", 34));
+        template = template.replace(/(\$LastOutBy)(_*)/, padHeaderInfo("", " ", 34));
+    }
+    return template;
 };
+
+const populateEmptyHeader = (template) => {
+    console.log('Path: populateHeader');
+    template = template.replace(/(\$FILENAME)(_*)/, padHeaderInfo(getFileName(), " ", 38));
+
+    template = template.replace(/(\$TimeLastIn)(_*)/,padHeaderInfo("<Never>"," ", 35));
+    template = template.replace(/(\$LastInBy)(_*)/, padHeaderInfo("", " ", 35));
+
+    template = template.replace(/(\$TimeLastOut)(_*)/,padHeaderInfo("<Never>"," ", 34))
+    template = template.replace(/(\$LastOutBy)(_*)/, padHeaderInfo("", " ", 34));
+
+    return template;
+};
+
+//q
+//r
+//s
+const supportHeaderLanguage = (languageId) => {
+    console.log('Path: supportHeaderLanguage');
+    return languageId in lang.demiliters;
+};
+
+const sftpSyncSave = () => {
+
+};
+//t
+//v
+//w
+//x
+//y
+//z
 
 module.exports = {
-    insertNewHeader,
     checkOutHeader,
-    checkInHeader
+    checkOutHandler,
+    checkInHeader,
+    checkInHandler,
+    commentHeader,
+    getCurrentHeader,
+    getFileName,
+    getHeaderConfig,
+    getUserEmail,
+    getHistoryFileName,
+    getHistoryFileStatus,
+    getHistoryTimeIn,
+    getHistoryInBy,
+    getHistoryTimeOut,
+    getHistoryOutBy,
+    getHeaderHistory,
+    headerExists,
+    insertNewHeader,
+    padHeaderInfo,
+    populateCheckOutHeader,
+    populateCheckInHeader,
+    populateEmptyHeader,
+    supportHeaderLanguage,
 };
