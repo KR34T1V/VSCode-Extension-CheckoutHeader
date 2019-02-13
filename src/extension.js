@@ -12,11 +12,12 @@ const document = activeTextEditor.document;
 const languageId = document.languageId;
 var history = {};
 
+
 const handleHeader = (val) => {
     if(ft.supportHeaderLanguage(languageId)){
-        if (val == 0)
-            ft.insertNewHeader();
-        else if (val == 1)
+        // if (val == 0)
+        //     ft.insertNewHeader();
+        if (val == 1)
             ft.checkInHandler();
         else if (val == 2)
             ft.checkOutHandler();
@@ -26,7 +27,7 @@ const handleHeader = (val) => {
     };
 }
 
-const handlerBlank = () => handleHeader(0);
+// const handlerBlank = () => handleHeader(0);
 const handlerCheckIn = () => handleHeader(1);
 const handlerCheckOut = () => handleHeader(2);
 //Check Language Support
@@ -43,13 +44,15 @@ function activate(context) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	console.log('CheckoutHeader: Now active!');
     
-    let blankHeader = vscode.commands.registerCommand('CheckoutHeader.new', handlerBlank);
+    // let blankHeader = vscode.commands.registerCommand('CheckoutHeader.new', handlerBlank);
 	let checkInHeader = vscode.commands.registerCommand('CheckoutHeader.in', handlerCheckIn);
 	let checkOutHeader = vscode.commands.registerCommand('CheckoutHeader.out', handlerCheckOut);
     
-	context.subscriptions.push(blankHeader);
+	// context.subscriptions.push(blankHeader);
 	context.subscriptions.push(checkInHeader);
-	context.subscriptions.push(checkOutHeader);
+    context.subscriptions.push(checkOutHeader);
+    if (ft.getHeaderConfig().get('enableSFTP'))
+        vscode.workspace.onDidSaveTextDocument(ft.sftpSyncSave);
 }
 exports.activate = activate;
 

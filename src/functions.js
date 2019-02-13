@@ -19,8 +19,9 @@ const checkOutHeader = (history) => {
     activeTextEditor.edit((editor) => {
         editor.replace(new vscode.Range(0,0,10,100), commentHeader(
             populateCheckOutHeader(head.out, history).substring(1), languageId));
+    }).then(()=>{
+        saveFile();
     });
-    sftpSyncSave();
 };
 
 const checkOutHandler = () => {
@@ -47,8 +48,9 @@ const checkOutHandler = () => {
         activeTextEditor.edit((editor) => {
             editor.insert(new vscode.Position(0,0), commentHeader(
                 populateCheckOutHeader(head.out).substring(1), languageId) +'\n');
+        }).then(()=>{
+            saveFile();
         });
-        sftpSyncSave();
     }
 };
 
@@ -56,8 +58,9 @@ const checkInHeader = (history) => {
     activeTextEditor.edit((editor) => {
         editor.replace(new vscode.Range(0,0,10,100), commentHeader(
             populateCheckInHeader(head.in, history).substring(1), languageId));
+    }).then(()=>{
+        saveFile();
     });
-    sftpSyncSave();
 };
 
 const checkInHandler = () => {
@@ -84,8 +87,9 @@ const checkInHandler = () => {
         activeTextEditor.edit((editor) => {
             editor.insert(new vscode.Position(0,0), commentHeader(
                 populateCheckInHeader(head.in).substring(1), languageId) +'\n');
+        }).then(()=>{
+            saveFile();
         });
-        sftpSyncSave();
     }
 };
 
@@ -119,7 +123,7 @@ const getFileName = () => {
 };
 
 const getHeaderConfig = () => {
-    console.log('Path: getUserName');
+    console.log('Path: getHeaderConfig');
     var file = vscode.workspace.getConfiguration('CheckoutHeader');
     return file;
 };
@@ -202,15 +206,15 @@ const headerExists = (header) => {
     return (0);
 };
 //i
-const insertNewHeader = () => {
-    console.log('Path: insertNewHeader');
-    console.log("Does Exist: " + headerExists(getCurrentHeader()));
-    var languageId = vscode.window.activeTextEditor.document.languageId;
-    supportHeaderLanguage(languageId);
-    vscode.window.activeTextEditor.edit((editor) => {
-        editor.insert(new vscode.Position(0, 0), commentHeader(populateEmptyHeader(head.blank).substring(1), languageId));
-    });
-};
+// const insertNewHeader = () => {
+//     console.log('Path: insertNewHeader');
+//     console.log("Does Exist: " + headerExists(getCurrentHeader()));
+//     var languageId = vscode.window.activeTextEditor.document.languageId;
+//     supportHeaderLanguage(languageId);
+//     vscode.window.activeTextEditor.edit((editor) => {
+//         editor.insert(new vscode.Position(0, 0), commentHeader(populateEmptyHeader(head.blank).substring(1), languageId));
+//     });
+// };
 //j
 //k
 //l
@@ -279,13 +283,26 @@ const populateEmptyHeader = (template) => {
 //q
 //r
 //s
-const supportHeaderLanguage = (languageId) => {
-    console.log('Path: supportHeaderLanguage');
-    return languageId in lang.demiliters;
+const saveFile = () => {
+    vscode.window.activeTextEditor.document.save().then((saved) => {
+        if (saved){
+            console.log("File Saved");
+            vscode.window.showInformationMessage("CheckoutHeader: File Saved!");
+        }
+        else {
+            vscode.window.showWarningMessage("CheckoutHeader: File Failed to Save!");
+        }
+    });
 };
 
 const sftpSyncSave = () => {
+    vscode.commands.executeCommand("sftp.sync.bothDirections");
+    console.log("CheckoutHeader: SFTP Synced");
+};
 
+const supportHeaderLanguage = (languageId) => {
+    console.log('Path: supportHeaderLanguage');
+    return languageId in lang.demiliters;
 };
 //t
 //v
@@ -312,10 +329,10 @@ module.exports = {
     getHistoryOutBy,
     getHeaderHistory,
     headerExists,
-    insertNewHeader,
     padHeaderInfo,
     populateCheckOutHeader,
     populateCheckInHeader,
     populateEmptyHeader,
     supportHeaderLanguage,
+    sftpSyncSave
 };
