@@ -14,7 +14,7 @@ const padHeaderInfo = (string, padding, minSize) => {
     return string;
 };
 
-const populateCheckOutHeader = (template) => {
+const populateCheckOutHeader = (template, history) => {
     template = template.replace(/(\$FILENAME)(_*)/m, padHeaderInfo(getFileName(), " ", 38));
     template = template.replace(/(\$TimeLastOut)(_*)/m,padHeaderInfo(moment()
         .format('YYYY/MM/DD, hh:mm:ss a'), " ", 35));
@@ -22,42 +22,91 @@ const populateCheckOutHeader = (template) => {
     return template;
 };
 
-const populateCheckInHeader = (template) => {
-    template = template.replace(/(\$FILENAME)(_*)/m, padHeaderInfo(getFileName(), " ", 38));
-    template = template.replace(/(\$TimeLastIn)(_*)/m,padHeaderInfo(moment()
-        .format('YYYY/MM/DD, hh:mm:ss a'), " ", 35));
-    template = template.replace(/(\$LastInBy)(_*)/m, padHeaderInfo(getUserEmail(), " ", 38));
+const populateCheckInHeader = (template, history) => {
     return template;
 };
 
 const populateEmptyHeader = (template) => {
     console.log('Path: populateHeader');
-    template = template.replace(/(\$FILENAME)(_*)/m, padHeaderInfo(getFileName(), " ", 38));
+    template = template.replace(/(\$FILENAME)(_*)/, padHeaderInfo(getFileName(), " ", 38));
+
+    template = template.replace(/(\$TimeLastIn)(_*)/,padHeaderInfo("<Never>"," ", 35));
+    template = template.replace(/(\$LastInBy)(_*)/, padHeaderInfo("", " ", 35));
+
+    template = template.replace(/(\$TimeLastOut)(_*)/,padHeaderInfo("<Never>"," ", 34))
+    template = template.replace(/(\$LastOutBy)(_*)/, padHeaderInfo("", " ", 34));
+
     return template;
 };
 
-const getHeaderStatus = (header) => {
-    console.log('Path: getHeaderStatus');
+const getHistoryFileName = (header) => {
+    console.log('Path: getHistoryFileName');
+    var file = header.match(/(File: )(.*)(\*)(.*)(\*)/);
+    //console.log(file);
+    return file[2];
+};
+
+const getHistoryFileStatus = (header) => {
+    console.log('Path: getHistoryFileStatus');
     var status = header.match(/(\|File Checked\|)(.)(\|)/);
-    return status[2];
+    //console.log(status);
+    if (status != null)
+        return status[2];
+    return null;
+};
+
+const getHistoryTimeIn = (header) => {
+    console.log('Path: getHistoryTimeIn')
+    var lastIn = header.match(/(Last-In: )(.*)(\*)(.*)(\*)/);
+    //console.log(lastIn);
+    if (lastIn != null)
+        return lastIn[2];
+    return null;
+};
+
+const getHistoryInBy = (header) => {
+    console.log('Path: getHistoryInBy');
+    var inBy = header.match(/(In By: )(.*)(\*)(.*)(\*)/);
+    //console.log(inBy);
+    if (inBy != null)
+        return inBy[2];
+    return null;
+};
+
+const getHistoryTimeOut = (header) => {
+    console.log("Path: getHistoryTimeOut")
+    var lastOut = header.match(/(Last-Out: )(.*)(\*)(.*)(\*)/);
+    //console.log(lastOut);
+    if (lastOut != null)
+        return lastOut[2];
+    return null;
+};
+
+const getHistoryOutBy = (header) => {
+    console.log('Path: getHistoryOutBy');
+    var outBy = header.match(/(Out By: )(.*)(\*)(.*)(\*)/);
+    //console.log(outBy);
+    if (outBy != null)
+        return outBy[2];
+    return null;
 };
 
 const getHeaderHistory = (header) => {
     console.log('Path: getHeaderHistory');
     var history ={};
-    //17:01
+    history.file = getHistoryFileName(header);
+    history.status = getHistoryFileStatus(header);
+    history.timeIn = getHistoryTimeIn(header);
+    history.inBy = getHistoryInBy(header);
+    history.timeOut = getHistoryTimeOut(header);
+    history.outBy = getHistoryOutBy(header);
     return history;
 };
 
-const getCurrentHeader = () =>{
-    console.log('Path: checkActiveHeader');
-    var currentHeader = vscode.window.activeTextEditor.document
-        .getText(new vscode.Range(0,0,10,100));
-    return(currentHeader);
-};
 
 const insertNewHeader = () => {
     console.log('Path: insertNewHeader');
+    console.log("Does Exist: " + headerExists(getCurrentHeader()));
     vscode.window.activeTextEditor.edit((editor) => {
         editor.insert(new vscode.Position(0, 0), populateEmptyHeader(head.blank).substring(1));
     });
@@ -65,12 +114,27 @@ const insertNewHeader = () => {
 
 const checkOutHeader = () => {
     console.log('Path: checkOutHeader');
-    getHeaderStatus(getCurrentHeader());
+    console.log(getCurrentHeader());
+    console.log("Does Exist: " + headerExists(getCurrentHeader()));
+    //console.log(getHeaderHistory(getCurrentHeader()));
 };
 
 const checkInHeader = () => {
 };
 
+const headerExists = (header) => {
+    var exists = getHistoryFileStatus(header);
+    if (exists != null)
+        return 1;
+    return (0);
+};
+
+const getCurrentHeader = () =>{
+    console.log('Path: getCurrentHeader');
+    var currentHeader = vscode.window.activeTextEditor.document
+        .getText(new vscode.Range(0,0,10,100));
+    return(currentHeader);
+};
 const getFileName = () => {
     var activeTextEditor = vscode.window.activeTextEditor;
     var activeDocument   = activeTextEditor.document;

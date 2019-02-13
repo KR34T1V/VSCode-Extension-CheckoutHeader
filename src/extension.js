@@ -5,6 +5,18 @@ const vscode = require('vscode');
 const moment = require('moment');
 const header = require('./templates');
 const ft     = require('./functions');
+//Globals
+var history = {};
+
+//Check Language Support
+//Get Header
+//Check Header
+//Get History
+//Create New Header
+//Replace Header
+//Save File
+//Sync Server
+
 
 function activate(context) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
