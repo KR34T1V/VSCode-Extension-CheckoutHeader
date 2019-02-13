@@ -4,6 +4,7 @@ const path   = require('path');
 const vscode = require('vscode');
 const moment = require('moment');
 const head   = require('./templates');
+const lang   = require('./comments');
 
 //Functions
 const padHeaderInfo = (string, padding, minSize) => {
@@ -55,6 +56,17 @@ const populateEmptyHeader = (template) => {
     return template;
 };
 
+const commentHeader = (template, languageId) => {
+    console.log('Path: commentHeader');
+    const [start, stop] = lang.demiliters[languageId]
+    const width = start.length
+  
+    template = template.replace(new RegExp(`^(.*)`, 'gm'),
+      start + '$1' + stop);
+    template += '\n';
+    return template;
+  }
+
 const getHistoryFileName = (header) => {
     console.log('Path: getHistoryFileName');
     var file = header.match(/(File: )(.*)(\*)(.*)(\*)/);
@@ -73,7 +85,7 @@ const getHistoryFileStatus = (header) => {
 
 const getHistoryTimeIn = (header) => {
     console.log('Path: getHistoryTimeIn')
-    var lastIn = header.match(/(Last-In: )(.*)(\*)(.*)(\*)/);
+    var lastIn = header.match(/(Last-In: )(.{38})/);
     //console.log(lastIn);
     if (lastIn != null)
         return lastIn[2];
@@ -82,7 +94,7 @@ const getHistoryTimeIn = (header) => {
 
 const getHistoryInBy = (header) => {
     console.log('Path: getHistoryInBy');
-    var inBy = header.match(/(In By: )(.*)(\*)(.*)(\*)/);
+    var inBy = header.match(/(In By: )(.{38})/);
     //console.log(inBy);
     if (inBy != null)
         return inBy[2];
@@ -91,7 +103,7 @@ const getHistoryInBy = (header) => {
 
 const getHistoryTimeOut = (header) => {
     console.log("Path: getHistoryTimeOut")
-    var lastOut = header.match(/(Last-Out: )(.*)(\*)(.*)(\*)/);
+    var lastOut = header.match(/(Last-Out: )(.{37})/);
     //console.log(lastOut);
     if (lastOut != null)
         return lastOut[2];
@@ -100,7 +112,7 @@ const getHistoryTimeOut = (header) => {
 
 const getHistoryOutBy = (header) => {
     console.log('Path: getHistoryOutBy');
-    var outBy = header.match(/(Out By: )(.*)(\*)(.*)(\*)/);
+    var outBy = header.match(/(Out By: )(.{37})/);
     //console.log(outBy);
     if (outBy != null)
         return outBy[2];
@@ -122,8 +134,9 @@ const getHeaderHistory = (header) => {
 const insertNewHeader = () => {
     console.log('Path: insertNewHeader');
     console.log("Does Exist: " + headerExists(getCurrentHeader()));
+    var languageId = vscode.window.activeTextEditor.document.languageId;
     vscode.window.activeTextEditor.edit((editor) => {
-        editor.insert(new vscode.Position(0, 0), populateEmptyHeader(head.blank).substring(1));
+        editor.insert(new vscode.Position(0, 0), commentHeader(populateEmptyHeader(head.blank).substring(1), languageId));
     });
 };
 
@@ -133,19 +146,26 @@ const checkOutHeader = () => {
     
     if (headerExists(header)){
         //Check Perms and replace data
+        var languageId = vscode.window.activeTextEditor.document.languageId;
         var history = getHeaderHistory(header);
 
         if (history.status != 2){
             //edit and replace header
             vscode.window.activeTextEditor.edit((editor) => {
-            editor.insert(new vscode.Position(0, 0), populateCheckOutHeader(head.out, history).substring(1));
+            editor.insert(new vscode.Position(0, 0), commentHeader(
+                populateCheckOutHeader(head.out, history).substring(1),languageId));
             });
         }
         else{
             //do error
             vscode.window.
                 showInformationMessage('This File Is already Checked out\nby: "' 
-                    + history.outBy + '"\non: < ' + history.timeOut +'>', 'Override', 'Cancel');
+                    + history.outBy + '"\non: < ' + history.timeOut +'>', 'Override', 'Cancel')
+                    .then(value => {
+                        console.log(value +' Was Selected!');
+                        //Save and sync
+                        //or do nothing
+                    });
         };
     }
     else {
@@ -155,6 +175,7 @@ const checkOutHeader = () => {
 
 const checkInHeader = () => {
     console.log('Path: checkInHeader');
+    var languageId = vscode.window.activeTextEditor.document.languageId;
     var header = getCurrentHeader();
     
     if (headerExists(header)){
@@ -164,14 +185,15 @@ const checkInHeader = () => {
         if (history.status != 1){
             //edit and replace header
             vscode.window.activeTextEditor.edit((editor) => {
-            editor.insert(new vscode.Position(0, 0), populateCheckInHeader(head.in, history).substring(1));
+            editor.insert(new vscode.Position(0, 0), commentHeader(
+                populateCheckInHeader(head.in, history).substring(1), languageId));
             });
         }
         else{
             //do error
             vscode.window.
                 showInformationMessage('This File Is already Checked In\nby: "' 
-                    + history.outBy + '"\non: < ' + history.timeOut +'>', 'Override', 'Cancel');
+                    + history.inBy + '"\non: < ' + history.timeIn +'>', 'Override', 'Cancel');
         };
     }
     else {
@@ -200,16 +222,15 @@ const getFileName = () => {
     return path.basename(activeDocument.fileName);
 };
 
-const getUserName = () => {
+const getHeaderConfig = () => {
     console.log('Path: getUserName');
-    var name = vscode.workspace.getConfiguration('CheckoutHeader').get('username') ||
-        'CheckoutHeader.name not set';
-    return name;
+    var file = vscode.workspace.getConfiguration('CheckoutHeader');
+    return file;
 };
 
 const getUserEmail = () => {
     console.log('Path: getUserEmail');
-    var name = vscode.workspace.getConfiguration('CheckoutHeader').get('email') ||
+    var name = getHeaderConfig().get('email') ||
         'CheckoutHeader.email not set';
     return name;
 };
