@@ -27,7 +27,8 @@ Ctrl+Alt+O (CheckOut File)
 /* *                                                *                              * */
 /* ********************************************************************************* */
 ```
-Checkout Header is a header based file control extension focused on providing the ability to mark files, "Checked In" or "Checked Out", to prevent colaborations from overwriting code.
+Checkout Header is a header based file control extension focused on providing the same ability as Dreamweaver on vscode.
+Mark files, "Checked In" or "Checked Out", to prevent colaborations from overwriting code.
 
 The extension applies with live changes in mind as to prevent more then one person working on a single file at any given time.
 
