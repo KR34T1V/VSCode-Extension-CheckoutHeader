@@ -1,6 +1,7 @@
 {
   "name": "checkoutheader",
-  "displayName": "CheckoutHeader",
+  "displayName": "Checkout Header",
+  "author": "m4dm0nk3y",
   "publisher": "m4dm0nk3y",
   "description": "Useful header for managing files on a live server along side SFTP extension. Alternative to Dreamweaver for vscode!",
   "version": "1.0.1",
@@ -10,6 +11,10 @@
     "type": "git",
     "url": "https://github.com/M4DM0NK3Y/CheckoutHeader-VSCode-Extension.git"
   },
+  "keywords": [
+    "Checkout",
+    "Dreamweaver"
+  ],
   "bugs": {
     "url": "https://github.com/M4DM0NK3Y/CheckoutHeader-VSCode-Extension/issues"
   },
