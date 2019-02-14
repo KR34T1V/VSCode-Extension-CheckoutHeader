@@ -2,7 +2,7 @@
   "name": "checkoutheader",
   "displayName": "CheckoutHeader",
   "description": "Useful header for managing files on a live server along side SFTP extension, Displays ",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "MIT",
   "repository": {
     "build": "https://github.com/M4DM0NK3Y/CheckoutHeader-VSCode-Extension.git"
