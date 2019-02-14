@@ -6,8 +6,13 @@
   "version": "1.0.0",
   "license": "MIT",
   "repository": {
-    "build": "https://github.com/M4DM0NK3Y/CheckoutHeader-VSCode-Extension.git"
+    "type": "git",
+    "url": "https://github.com/M4DM0NK3Y/CheckoutHeader-VSCode-Extension.git"
   },
+  "bugs": {
+    "url": "https://github.com/M4DM0NK3Y/CheckoutHeader-VSCode-Extension/issues"
+  },
+  "homepage": "https://github.com/M4DM0NK3Y/CheckoutHeader-VSCode-Extension",
   "engines": {
     "vscode": "^1.31.0"
   },
