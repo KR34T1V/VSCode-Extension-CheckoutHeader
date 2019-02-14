@@ -36,10 +36,6 @@ It works locally or with the SFTP extension for live server edits.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
 * `CheckoutHeader.email`: email@email.com (email to stamp onto header)
