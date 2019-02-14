@@ -309,8 +309,9 @@ const saveFile = () => {
 };
 
 const sftpSyncSave = () => {
-    vscode.commands.executeCommand("sftp.sync.bothDirections");
-    console.log("CheckoutHeader: SFTP Synced");
+    vscode.commands.executeCommand('sftp.sync.bothDirections').then(() => {
+        console.log("CheckoutHeader: SFTP Synced");
+    });
 };
 
 const supportHeaderLanguage = (languageId) => {
