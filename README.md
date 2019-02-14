@@ -1,20 +1,36 @@
 # checkoutheader README
 
-This is the README for your extension "checkoutheader". After writing up a brief description, we recommend including the following sections.
-
 ## Features
+ctrl+alt+I (Check-In File)
+*********************************************************************************
+* File: $FILENAME_____________________________   *      |File Checked|1|        *
+*                                                *                              *
+*                                                *      ██╗    ███╗   ██╗       *
+* Last-In: $TimeLastIn________________________   *      ██║    ████╗  ██║       *
+*   In By: $LastInBy__________________________   *      ██║    ██╔██╗ ██║       *
+*                                                *      ██║    ██║╚██╗██║       *
+* Last-Out: $TimeLastOut______________________   *      ██║    ██║ ╚████║       *
+*   Out By: $LastOutBy________________________   *      ╚═╝    ╚═╝  ╚═══╝       *
+*                                                *                              *
+*********************************************************************************
+ctrl+alt+O (CheckOut File)
+*********************************************************************************
+* File: $FILENAME_____________________________   *      |File Checked|2|        *
+*                                                *                              *
+*                                                *   ██████╗ ██╗   ██╗████████╗ *
+* Last-In: $TimeLastIn________________________   *  ██╔═══██╗██║   ██║╚══██╔══╝ *
+*   In By: $LastInBy__________________________   *  ██║   ██║██║   ██║   ██║    *
+*                                                *  ██║   ██║██║   ██║   ██║    *
+* Last-Out: $TimeLastOut______________________   *  ╚██████╔╝╚██████╔╝   ██║    *
+*   Out By: $LastOutBy________________________   *   ╚═════╝  ╚═════╝    ╚═╝    *
+*                                                *                              *
+*********************************************************************************
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Checkout Header is a header based file control extension focused on providing the ability to mark files, "Checked In" or "Checked Out", to prevent colaborations from overwriting code.
 
-For example if there is an image subfolder under your extension project workspace:
+The extension applies with live changes in mind as to prevent more then one person working on a single file at any given time.
 
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+It works locally or with the SFTP extension for live server edits.
 
 ## Extension Settings
 
@@ -24,42 +40,16 @@ For example:
 
 This extension contributes the following settings:
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+* `CheckoutHeader.email`: email@email.com (email to stamp onto header)
+* `CheckoutHeader.enableSFTP`: bolean (enables SFTP live sync)
 
 ## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
+(none)
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
 ### 1.0.0
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+Initial release of CheckoutHeader
 
 **Enjoy!**
