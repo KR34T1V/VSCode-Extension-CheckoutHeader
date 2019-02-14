@@ -5,6 +5,7 @@
   "description": "Useful header for managing files on a live server along side SFTP extension. Alternative to Dreamweaver for vscode!",
   "version": "1.0.0",
   "license": "MIT",
+  "icon": "logo.jpg",
   "repository": {
     "type": "git",
     "url": "https://github.com/M4DM0NK3Y/CheckoutHeader-VSCode-Extension.git"
