@@ -6,14 +6,15 @@ const moment = require('moment');
 const header = require('./templates');
 const ft     = require('./functions');
 const lang   = require('./comments');
-//Globals
-const activeTextEditor = vscode.window.activeTextEditor;
-const document = activeTextEditor.document;
-const languageId = document.languageId;
-var history = {};
 
 
 const handleHeader = (val) => {
+    const activeTextEditor = vscode.window.activeTextEditor;
+    const document = activeTextEditor.document;
+    const languageId = document.languageId;
+    console.log("Path: handleHeader");
+    console.log("Supported: "+ft.supportHeaderLanguage(languageId));
+
     if(ft.supportHeaderLanguage(languageId)){
         // if (val == 0)
         //     ft.insertNewHeader();

@@ -6,16 +6,16 @@ const moment = require('moment');
 const head   = require('./templates');
 const lang   = require('./comments');
 
-//Variables
-const activeTextEditor = vscode.window.activeTextEditor;
-const document = activeTextEditor.document;
-const languageId = document.languageId;
-
 //Functions
 //a
 //b
 //c
 const checkOutHeader = (history) => {
+    const activeTextEditor = vscode.window.activeTextEditor;
+    const document = activeTextEditor.document;
+    const languageId = document.languageId;
+    console.log("Path: checkOutHeader");
+
     activeTextEditor.edit((editor) => {
         editor.replace(new vscode.Range(0,0,10,100), commentHeader(
             populateCheckOutHeader(head.out, history).substring(1), languageId));
@@ -25,7 +25,11 @@ const checkOutHeader = (history) => {
 };
 
 const checkOutHandler = () => {
+    const activeTextEditor = vscode.window.activeTextEditor;
+    const document = activeTextEditor.document;
+    const languageId = document.languageId;
     console.log('Path: checkOutHandler');
+
     var header = getCurrentHeader();
         
     if (headerExists(header)){
@@ -55,6 +59,11 @@ const checkOutHandler = () => {
 };
 
 const checkInHeader = (history) => {
+    const activeTextEditor = vscode.window.activeTextEditor;
+    const document = activeTextEditor.document;
+    const languageId = document.languageId;
+    console.log("Path: checkInHeader");
+    
     activeTextEditor.edit((editor) => {
         editor.replace(new vscode.Range(0,0,10,100), commentHeader(
             populateCheckInHeader(head.in, history).substring(1), languageId));
@@ -64,7 +73,11 @@ const checkInHeader = (history) => {
 };
 
 const checkInHandler = () => {
+    const activeTextEditor = vscode.window.activeTextEditor;
+    const document = activeTextEditor.document;
+    const languageId = document.languageId;
     console.log('Path: checkInHandler');
+
     var header = getCurrentHeader();
         
     if (headerExists(header)){
