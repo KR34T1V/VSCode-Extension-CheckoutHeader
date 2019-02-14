@@ -1,6 +1,7 @@
 {
   "name": "checkoutheader",
   "displayName": "CheckoutHeader",
+  "publisher": "m4dm0nk3y",
   "description": "Useful header for managing files on a live server along side SFTP extension, Displays ",
   "version": "1.0.0",
   "license": "MIT",
