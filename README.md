@@ -1,7 +1,6 @@
-# checkoutheader README
-
 ## Features
 ctrl+alt+I (Check-In File)
+```
 *********************************************************************************
 * File: $FILENAME_____________________________   *      |File Checked|1|        *
 *                                                *                              *
@@ -25,7 +24,7 @@ ctrl+alt+O (CheckOut File)
 *   Out By: $LastOutBy________________________   *   ╚═════╝  ╚═════╝    ╚═╝    *
 *                                                *                              *
 *********************************************************************************
-
+```
 Checkout Header is a header based file control extension focused on providing the ability to mark files, "Checked In" or "Checked Out", to prevent colaborations from overwriting code.
 
 The extension applies with live changes in mind as to prevent more then one person working on a single file at any given time.
