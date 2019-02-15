@@ -329,6 +329,12 @@ const saveFile = () => {
     });
 };
 
+const sftpSyncGet = () => {
+    vscode.commands.executeCommand('sftp.download.activeFolder').then(() => {
+        console.log("CheckoutHeader: SFTP Local Folder Updated!");
+    });
+};
+
 const sftpSyncSave = () => {
     vscode.commands.executeCommand('sftp.upload.activeFile').then(() => {
         console.log("CheckoutHeader: SFTP File Uploaded!");
@@ -369,5 +375,6 @@ module.exports = {
     populateCheckInHeader,
     populateEmptyHeader,
     supportHeaderLanguage,
+    sftpSyncGet,
     sftpSyncSave
 };

@@ -27,8 +27,10 @@ const handleHeader = (val) => {
 }
 
 const changedConfig = () => {
-    if (ft.getHeaderConfig().get('enableSFTP'))
+    if (ft.getHeaderConfig().get('enableSFTP')) {
         vscode.workspace.onDidSaveTextDocument(ft.sftpSyncSave);
+        vscode.workspace.onDidChangeTextDocument(ft.sftpSyncGet);
+    }
 };
 
 const handlerCheckIn = () => handleHeader(1);
