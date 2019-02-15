@@ -330,8 +330,8 @@ const saveFile = () => {
 };
 
 const sftpSyncSave = () => {
-    vscode.commands.executeCommand('sftp.sync.bothDirections').then(() => {
-        console.log("CheckoutHeader: SFTP Synced");
+    vscode.commands.executeCommand('sftp.upload.activeFile').then(() => {
+        console.log("CheckoutHeader: SFTP File Uploaded!");
     });
 };
 
