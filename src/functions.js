@@ -240,15 +240,6 @@ const headerExists = (header) => {
     return (0);
 };
 //i
-// const insertNewHeader = () => {
-//     console.log('Path: insertNewHeader');
-//     console.log("Does Exist: " + headerExists(getCurrentHeader()));
-//     var languageId = vscode.window.activeTextEditor.document.languageId;
-//     supportHeaderLanguage(languageId);
-//     vscode.window.activeTextEditor.edit((editor) => {
-//         editor.insert(new vscode.Position(0, 0), commentHeader(populateEmptyHeader(head.blank).substring(1), languageId));
-//     });
-// };
 //j
 //k
 //l
@@ -330,14 +321,24 @@ const saveFile = () => {
 };
 
 const sftpSyncGet = () => {
-    vscode.commands.executeCommand('sftp.download.activeFolder').then(() => {
-        console.log("CheckoutHeader: SFTP Local Folder Updated!");
+    vscode.commands.executeCommand('sftp.download.activeFile').then((success) => {
+        if (success){
+            console.log("CheckoutHeader: SFTP File Synced!");
+            vscode.window.showInformationMessage("CheckoutHeader: SFTP File Synced!");
+        }
+        else
+        vscode.window.showWarningMessage("CheckoutHeader: SFTP File Failed to Sync!");
     });
 };
 
 const sftpSyncSave = () => {
-    vscode.commands.executeCommand('sftp.upload.activeFile').then(() => {
-        console.log("CheckoutHeader: SFTP File Uploaded!");
+    vscode.commands.executeCommand('sftp.upload.activeFile').then((success) => {
+        if (success){
+            console.log("CheckoutHeader: SFTP File Uploaded!");
+            vscode.window.showInformationMessage("CheckoutHeader: SFTP File Uploaded!");
+        }
+        else
+            vscode.window.showWarningMessage("CheckoutHeader: SFTP File Failed to Upload!");
     });
 };
 
