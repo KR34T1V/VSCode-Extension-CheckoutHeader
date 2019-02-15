@@ -42,7 +42,7 @@ https://github.com/liximomo/vscode-sftp.git
 ```
 {
     "uploadOnSave": false,
-    "downloadOnOpen": true,
+    "downloadOnOpen": false,
     "ignore": [
         "**/.vscode/**",
         "**/.git/**",
