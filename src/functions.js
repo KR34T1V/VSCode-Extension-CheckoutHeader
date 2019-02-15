@@ -95,7 +95,17 @@ const checkInHandler = () => {
         var history = getHeaderHistory(header);
 
         if (history.status != 1){
+            if (history.outBy == getUserEmail())
                 checkInHeader(history);
+            else {
+                vscode.window
+                .showInformationMessage('This File Was Checked Out\nby: "' 
+                    + history.outBy + '"\non: < ' + history.timeOut +'>', 'Override', 'Cancel')
+                    .then((select) => {
+                        if (select == 'Override')
+                            checkInHeader(history);
+                    });
+            }
         }
         else {
             vscode.window
@@ -155,7 +165,7 @@ const getHeaderConfig = () => {
 const getUserEmail = () => {
     console.log('Path: getUserEmail');
     var name = getHeaderConfig().get('email') ||
-        'CheckoutHeader.email not set';
+        'CheckSettings';
     return name;
 };
 
@@ -163,7 +173,7 @@ const getHistoryFileName = (header) => {
     console.log('Path: getHistoryFileName');
     var file = header.match(/(File: )(.*)(\*)(.*)(\*)/);
     //console.log(file);
-    return file[2];
+    return file[2].trim();
 };
 
 const getHistoryFileStatus = (header) => {
@@ -171,7 +181,7 @@ const getHistoryFileStatus = (header) => {
     var status = header.match(/(\|File Checked\|)(.)(\|)/);
     //console.log(status);
     if (status != null)
-        return status[2];
+        return status[2].trim();
     return null;
 };
 
@@ -180,7 +190,7 @@ const getHistoryTimeIn = (header) => {
     var lastIn = header.match(/(Last-In: )(.{38})/);
     //console.log(lastIn);
     if (lastIn != null)
-        return lastIn[2];
+        return lastIn[2].trim();
     return null;
 };
 
@@ -189,7 +199,7 @@ const getHistoryInBy = (header) => {
     var inBy = header.match(/(In By: )(.{38})/);
     //console.log(inBy);
     if (inBy != null)
-        return inBy[2];
+        return inBy[2].trim();
     return null;
 };
 
@@ -198,7 +208,7 @@ const getHistoryTimeOut = (header) => {
     var lastOut = header.match(/(Last-Out: )(.{37})/);
     //console.log(lastOut);
     if (lastOut != null)
-        return lastOut[2];
+        return lastOut[2].trim();
     return null;
 };
 
@@ -207,7 +217,7 @@ const getHistoryOutBy = (header) => {
     var outBy = header.match(/(Out By: )(.{37})/);
     //console.log(outBy);
     if (outBy != null)
-        return outBy[2];
+        return outBy[2].trim();
     return null;
 };
 

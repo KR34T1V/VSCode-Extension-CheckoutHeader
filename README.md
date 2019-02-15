@@ -38,7 +38,18 @@ SFTP:
 https://github.com/liximomo/vscode-sftp.git
 
 ## Extension Settings
-
+### Suggested SFTP Settings
+```
+{
+    "uploadOnSave": false,
+    "downloadOnOpen": true,
+    "ignore": [
+        "**/.vscode/**",
+        "**/.git/**",
+        "**/.DS_Store"
+    ]
+}
+```
 This extension contributes the following settings:
 
 * `CheckoutHeader.email`: email@email.com (email to stamp onto header)
@@ -49,8 +60,16 @@ This extension contributes the following settings:
 
 ## Release Notes
 
-### 1.0.0
-
-Initial release of CheckoutHeader
+## [1.0.0]
+###1.0.1
+    -Initial release
+###1.0.2
+    -Added HTML
+###1.0.3
+    -CFML support
+###1.0.4
+    -Updated Readme
+###1.0.5
+    -Cannot check-in if same user did not checkout (Override Option Available)
 
 **Enjoy!**
