@@ -34,6 +34,9 @@ The extension applies with live changes in mind as to prevent more then one pers
 
 It works locally or with the SFTP extension for live server edits.
 
+SFTP:
+https://github.com/liximomo/vscode-sftp.git
+
 ## Extension Settings
 
 This extension contributes the following settings:
