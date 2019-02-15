@@ -1,12 +1,15 @@
-const hashes = ['# ', ' #']
-const slashes = ['/* ', ' */']
-const semicolons = [';; ', ' ;;']
-const parens = ['(* ', ' *)']
-const dashes = ['-- ', ' --']
-const percents = ['%% ', ' %%']
+const hashes = ['# ', ' #'];
+const slashes = ['/* ', ' */'];
+const semicolons = [';; ', ' ;;'];
+const parens = ['(* ', ' *)'];
+const dashes = ['-- ', ' --'];
+const percents = ['%% ', ' %%'];
+const htmlstyle = ['<!-- ', ' -->'];
+const coldfusion = ['<!--- ', ' --->'];
 
 const demiliters = {
   'c': slashes,
+  'cfml': coldfusion,
   'coffeescript': hashes,
   'cpp': slashes,
   'css': slashes,
@@ -15,6 +18,7 @@ const demiliters = {
   'go': slashes,
   'groovy': slashes,
   'haskell': dashes,
+  'html': htmlstyle,
   'ini': semicolons,
   'jade': slashes,
   'java': slashes,
@@ -43,7 +47,7 @@ const demiliters = {
   'typescriptreact': slashes,
   'xsl': slashes,
   'yaml': hashes
-}
+};
 
 module.exports = {
     demiliters
