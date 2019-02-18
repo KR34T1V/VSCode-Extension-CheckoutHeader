@@ -1,11 +1,8 @@
 "use strict"
 //Required Inputs
-const path   = require('path');
 const vscode = require('vscode');
-const moment = require('moment');
-const header = require('./templates');
 const ft     = require('./functions');
-const lang   = require('./comments');
+const colors = require('./coloredTitleBars');
 
 
 const handleHeader = (val) => {
@@ -16,10 +13,14 @@ const handleHeader = (val) => {
     console.log("Supported: "+ft.supportHeaderLanguage(languageId));
 
     if(ft.supportHeaderLanguage(languageId)){
-        if (val == 1)
+        if (val == 1){
             ft.checkInHandler();
-        else if (val == 2)
+            colors.setColors();
+        }
+        else if (val == 2){
             ft.checkOutHandler();
+            colors.setColors(1);
+        }
     }
     else {
         vscode.window.showErrorMessage('CheckoutHeaders: Language: "'+languageId+'" Not Supported!');
