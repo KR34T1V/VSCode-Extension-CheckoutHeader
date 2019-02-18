@@ -1,14 +1,19 @@
-const fs        = require('fs');
 const vscode    = require('vscode');
+const ft        = require('./functions');
 "use strict"
 
-const vscodeDir = this.workspaceRoot + '/.vscode';
-const workspaceSettings = vscodeDir + '/settings.json';
-const settingsJson = JSON.parse(fs.readFileSync(workspaceSettings,'utf8')); //MAKE SURE THIS UPDATES!
-const clearEffects = () => {
-    console.log('Path: clearEffects');
-    //Restore default color settings
-    fs.unlinkSync(workspaceSettings)
+const handleColors = () => {
+    console.log('Path: handleColors');
+    var header  = ft.getCurrentHeader();
+    var history = ft.getHeaderHistory();
+    var email   = ft.getUserEmail();
+
+    if (ft.getHeaderConfig().get('enableTitleBarColors')){
+        if (history.status == 2 && history.outBy == email)
+            setColors(1);
+        else 
+            setColors(0);
+    }
 };
 
 const setColors = (safe) => {
@@ -27,4 +32,8 @@ const setColors = (safe) => {
         }
         vscode.workspace.getConfiguration('workbench').update('colorCustomizations', unsafeColors, false);
     };
+};
+
+module.exports = {
+    handleColors
 };

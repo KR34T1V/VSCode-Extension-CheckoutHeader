@@ -36,6 +36,10 @@
           "type": "boolean",
           "description": "Sync with server on save?"
         },
+        "CheckoutHeader.enableTitleBarColors": {
+            "type": "boolean",
+            "description": "Change titlebar color based on file status?"
+          },
         "CheckoutHeader.email": {
           "type": "string",
           "description": "Email address used to populate CheckoutHeaders!"
