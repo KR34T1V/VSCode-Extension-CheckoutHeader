@@ -15,11 +15,9 @@ const handleHeader = (val) => {
     if(ft.supportHeaderLanguage(languageId)){
         if (val == 1){
             ft.checkInHandler();
-            colors.setColors();
         }
         else if (val == 2){
             ft.checkOutHandler();
-            colors.setColors(1);
         }
     }
     else {
