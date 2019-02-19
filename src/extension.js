@@ -2,7 +2,7 @@
 //Required
 const vscode                = require('vscode');
 const f_ColoredTitleBars    = require('./functionsColoredTitleBars');
-const f_Config              = require('./functionsConfig');
+const f_Config              = require('git ./functionsConfig');
 const f_Headers             = require('./functionsHeaders');
 const f_SFTP                = require('./functionsSFTP');
 const t_Headers             = require('./templatesHeaders');
