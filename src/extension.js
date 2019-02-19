@@ -20,14 +20,20 @@ const checkOut = () => handlerHeader(2).then(()=>{
 const handlerColoredTitleBars = () => {
     if (f_Config.getUserConfig('enableTitleBarColors')){
         var header  = f_Headers.getCurrentHeader();
-        var history = f_Headers.getHeaderHistory(header);
-        var email   = f_Config.getUserEmail();
+        if (f_Headers.headerExists(header)){
+            var history = f_Headers.getHeaderHistory(header);
+            var email   = f_Config.getUserEmail();
 
-        if (history.status == 2 && history.outBy == email)
-            f_ColoredTitleBars.setColors(1);
+            if (history.status == 2 && history.outBy == email)
+                f_ColoredTitleBars.setColors(1);
+            else
+                f_ColoredTitleBars.setColors(0);
+        }
         else
-            f_ColoredTitleBars.setColors(0);
+            f_ColoredTitleBars.clearColors();
     }
+    else
+        f_ColoredTitleBars.clearColors();
 };
 
 const handlerHeader = (select) => {

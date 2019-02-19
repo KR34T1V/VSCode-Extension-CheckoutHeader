@@ -22,6 +22,12 @@ const setColors = (safe) => {
     };
 };
 
+const clearColors = () => {
+    console.log('Path: clearColors');
+    vscode.workspace.getConfiguration('workbench').update('colorCustomizations', '', false);
+};
+
 module.exports = {
-    setColors
+    setColors,
+    clearColors
 };
