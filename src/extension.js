@@ -18,6 +18,8 @@ const checkOut = () => handlerHeader(2).then(()=>{
 });
 
 const handlerColoredTitleBars = () => {
+    console.log('Path: handlerColoredTitleBars');
+    
     if (f_Config.getUserConfig('enableTitleBarColors')){
         var header  = f_Headers.getCurrentHeader();
         if (f_Headers.headerExists(header)){
@@ -137,10 +139,12 @@ function activate(context) {
 	console.log('CheckoutHeader: Now active!');
     
 	let checkInHeader = vscode.commands.registerCommand('CheckoutHeader.in', checkIn);
-	let checkOutHeader = vscode.commands.registerCommand('CheckoutHeader.out', checkOut);
+    let checkOutHeader = vscode.commands.registerCommand('CheckoutHeader.out', checkOut);
     
 	context.subscriptions.push(checkInHeader);
     context.subscriptions.push(checkOutHeader);
+
+    vscode.window.onDidChangeActiveTextEditor(handlerColoredTitleBars);
 }
 exports.activate = activate;
 
