@@ -6,10 +6,10 @@ Ctrl+Alt+I (Check-In File)
 /* *                                                *                              * */
 /* *                                                *      ██╗    ███╗   ██╗       * */
 /* * Last-In: 2019/02/14, 09:57:26 pm               *      ██║    ████╗  ██║       * */
-/* *   In By: m4dm0nk3y                             *      ██║    ██╔██╗ ██║       * */
+/* *   In By: m4dm0nk3y.za@gmail.com                *      ██║    ██╔██╗ ██║       * */
 /* *                                                *      ██║    ██║╚██╗██║       * */
 /* * Last-Out: 2019/02/14, 09:57:19 pm              *      ██║    ██║ ╚████║       * */
-/* *   Out By: m4dm0nk3y                            *      ╚═╝    ╚═╝  ╚═══╝       * */
+/* *   Out By: m4dm0nk3y.za@gmail.com               *      ╚═╝    ╚═╝  ╚═══╝       * */
 /* *                                                *                              * */
 /* ********************************************************************************* */
 ```
@@ -20,10 +20,10 @@ Ctrl+Alt+O (CheckOut File)
 /* *                                                *                              * */
 /* *                                                *   ██████╗ ██╗   ██╗████████╗ * */
 /* * Last-In: 2019/02/14, 09:57:26 pm               *  ██╔═══██╗██║   ██║╚══██╔══╝ * */
-/* *   In By: m4dm0nk3y                             *  ██║   ██║██║   ██║   ██║    * */
+/* *   In By: m4dm0nk3y.za@gmail.com                *  ██║   ██║██║   ██║   ██║    * */
 /* *                                                *  ██║   ██║██║   ██║   ██║    * */
 /* * Last-Out: 2019/02/14, 09:58:23 pm              *  ╚██████╔╝╚██████╔╝   ██║    * */
-/* *   Out By: m4dm0nk3y                            *   ╚═════╝  ╚═════╝    ╚═╝    * */
+/* *   Out By: m4dm0nk3y.za@gmail.com               *   ╚═════╝  ╚═════╝    ╚═╝    * */
 /* *                                                *                              * */
 /* ********************************************************************************* */
 ```
@@ -41,8 +41,8 @@ https://github.com/liximomo/vscode-sftp.git
 ### Suggested SFTP Settings
 ```
 {
-    "uploadOnSave": false,
-    "downloadOnOpen": false,
+    "uploadOnSave": true,
+    "downloadOnOpen": true,
     "ignore": [
         "**/.vscode/**",
         "**/.git/**",
@@ -53,14 +53,15 @@ https://github.com/liximomo/vscode-sftp.git
 This extension contributes the following settings:
 
 * `CheckoutHeader.email`: email@email.com (email to stamp onto header)
-* `CheckoutHeader.enableSFTP`: bolean (enables SFTP live sync)
+* `CheckoutHeader.enableSFTP`: boolean (enables SFTP live sync) [Disabled]
+* `CheckoutHeader.enableTitleBarColors`: boolean (Changes title bar color based on file status)
 
 ## Known Issues
-(none)
+Header overwrites text that interferes with it.
 
 ## Release Notes
 
-## [1.0.0]
+## [1]
 **1.0.1**
 
     -Initial release
@@ -79,6 +80,11 @@ This extension contributes the following settings:
     
 **1.0.5**
 
-    -Cannot check-in if same user did not checkout (Override Option Available)
+    -Cannot check-in if same user did not checkout (Overwrite option available)
 
+**1.1.0**
+
+    -Realeased colored title bar option
+    -Disabled SFTP sync for now (use suggested settings)
+    
 **Enjoy!**
