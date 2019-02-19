@@ -44,8 +44,6 @@ function activate(context) {
     
 	context.subscriptions.push(checkInHeader);
     context.subscriptions.push(checkOutHeader);
-    vscode.workspace.onDidChangeConfiguration(changedConfig);
-    console.log("enableSFTP = "+ft.getUserConfig('enableSFTP'));
 }
 exports.activate = activate;
 
