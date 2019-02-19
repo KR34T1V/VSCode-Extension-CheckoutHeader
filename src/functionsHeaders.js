@@ -146,24 +146,6 @@ const padHeaderInfo = (string, padding, minSize) => {
     return string;
 };
 
-const populateCheckOutHeader = (template, history) => {
-    console.log('Path: populateCheckoutHeader');
-
-    template = template.replace(/(\$FILENAME)(_*)/, padHeaderInfo(f_config.getFileName(), " ", 38));
-    if (history && history.timeIn.length > 0 && history.inBy.length > 0){
-        template = template.replace(/(\$TimeLastIn)(_*)/,padHeaderInfo(history.timeIn," ", 35));
-        template = template.replace(/(\$LastInBy)(_*)/, padHeaderInfo(history.inBy, " ", 35));
-    }
-    else {
-        template = template.replace(/(\$TimeLastIn)(_*)/,padHeaderInfo("<Never>"," ", 35));
-        template = template.replace(/(\$LastInBy)(_*)/, padHeaderInfo("", " ", 35));
-    }
-    template = template.replace(/(\$TimeLastOut)(_*)/,padHeaderInfo(moment()
-        .format('YYYY/MM/DD, hh:mm:ss a'), " ", 34));
-    template = template.replace(/(\$LastOutBy)(_*)/, padHeaderInfo(f_config.getUserEmail(), " ", 34));
-    return template;
-};
-
 const populateCheckInHeader = (template, history) => {
     console.log('Path: populateCheckoutHeader');
 
@@ -183,6 +165,24 @@ const populateCheckInHeader = (template, history) => {
     return template;
 };
 
+const populateCheckOutHeader = (template, history) => {
+    console.log('Path: populateCheckoutHeader');
+
+    template = template.replace(/(\$FILENAME)(_*)/, padHeaderInfo(f_config.getFileName(), " ", 38));
+    if (history && history.timeIn.length > 0 && history.inBy.length > 0){
+        template = template.replace(/(\$TimeLastIn)(_*)/,padHeaderInfo(history.timeIn," ", 35));
+        template = template.replace(/(\$LastInBy)(_*)/, padHeaderInfo(history.inBy, " ", 35));
+    }
+    else {
+        template = template.replace(/(\$TimeLastIn)(_*)/,padHeaderInfo("<Never>"," ", 35));
+        template = template.replace(/(\$LastInBy)(_*)/, padHeaderInfo("", " ", 35));
+    }
+    template = template.replace(/(\$TimeLastOut)(_*)/,padHeaderInfo(moment()
+        .format('YYYY/MM/DD, hh:mm:ss a'), " ", 34));
+    template = template.replace(/(\$LastOutBy)(_*)/, padHeaderInfo(f_config.getUserEmail(), " ", 34));
+    return template;
+};
+
 const supportHeaderLanguage = (languageId) => {
     console.log('Path: supportHeaderLanguage');
     return languageId in t_delimiters.demiliters;
@@ -190,5 +190,20 @@ const supportHeaderLanguage = (languageId) => {
 
 //export
 module.exports = {
-    
+    checkOutHeader,
+    checkInHeader,
+    commentHeader,
+    getCurrentHeader,
+    getHistoryFileName,
+    getHistoryFileStatus,
+    getHistoryTimeIn,
+    getHistoryInBy,
+    getHistoryTimeOut,
+    getHistoryOutBy,
+    getHeaderHistory,
+    headerExists,
+    padHeaderInfo,
+    populateCheckInHeader,
+    populateCheckOutHeader,
+    supportHeaderLanguage
 }
