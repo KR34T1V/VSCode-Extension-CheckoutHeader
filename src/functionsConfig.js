@@ -30,16 +30,20 @@ const getUserEmail = () => {
 
 const saveFile = () => {
     console.log('Path: saveFile');
+    return new Promise((res, rej) =>{
 
-    vscode.window.activeTextEditor.document.save().then((saved) => {
-        if (saved){
-            console.log("File Saved");
-            vscode.window.showInformationMessage("CheckoutHeader: File Saved!");
-        }
-        else {
-            console.log("Failed to Save File");
-            vscode.window.showWarningMessage("CheckoutHeader: File Failed to Save!");
-        }
+        vscode.window.activeTextEditor.document.save().then((saved) => {
+            if (saved){
+                console.log("File Saved");
+                vscode.window.showInformationMessage("CheckoutHeader: File Saved!");
+                res(1);
+            }
+            else {
+                rej("Failed to Save File");
+                console.log("Failed to Save File");
+                vscode.window.showWarningMessage("CheckoutHeader: File Failed to Save!");
+            }
+        });
     });
 };
 

@@ -9,24 +9,49 @@ const t_Headers             = require('./templatesHeaders');
 
 
 //Functions
-const checkIn = () => handlerHeader(1);
-const checkOut = () => handlerHeader(2);
+const checkIn = () => handlerHeader(1).then(()=>{
+    f_Config.saveFile().then(handlerColoredTitleBars);
+});
+
+const checkOut = () => handlerHeader(2).then(()=>{
+    f_Config.saveFile().then(handlerColoredTitleBars);
+});
+
+const handlerColoredTitleBars = () => {
+    if (f_Config.getUserConfig('enableTitleBarColors')){
+        var header  = f_Headers.getCurrentHeader();
+        var history = f_Headers.getHeaderHistory(header);
+        var email   = f_Config.getUserEmail();
+
+        if (history.status == 2 && history.outBy == email)
+            f_ColoredTitleBars.setColors(1);
+        else
+            f_ColoredTitleBars.setColors(0);
+    }
+};
 
 const handlerHeader = (select) => {
     console.log(`Path: handlerHeader [select(${select})]`);
 
-    const activeTextEditor = vscode.window.activeTextEditor;
-    const document = activeTextEditor.document;
-    const languageId = document.languageId;
+    return new Promise((res, rej) => {
     
-    if (f_Headers.supportHeaderLanguage(languageId)){
-        if (select == 1)
-            handlerCheckIn();
-        else if (select == 2)
-            handlerCheckOut();
-    }
-    else
-        vscode.window.showErrorMessage(`CheckoutHeader: Language <${languageId}> Not Supported!`);
+        const activeTextEditor = vscode.window.activeTextEditor;
+        const document = activeTextEditor.document;
+        const languageId = document.languageId;
+
+
+        if (f_Headers.supportHeaderLanguage(languageId)){
+            if (select == 1)
+                handlerCheckIn();
+            else if (select == 2)
+                handlerCheckOut();
+            res(1);
+        }
+        else{
+            rej(`CheckoutHeader: Language <${languageId}> Not Supported!`);
+            vscode.window.showErrorMessage(`CheckoutHeader: Language <${languageId}> Not Supported!`);
+        }
+    });
 };
 
 const handlerCheckIn = () => {
