@@ -3,7 +3,7 @@ const ft        = require('./functions');
 "use strict"
 
 const handleColors = () => {
-    if (ft.getHeaderConfig().get('enableTitleBarColors')){
+    if (ft.getUserConfig('enableTitleBarColors')){
         var header = ft.getCurrentHeader();
         console.log(header);
         var history = ft.getHeaderHistory(header);

@@ -156,15 +156,15 @@ const getFileName = () => {
     return path.basename(activeDocument.fileName);
 };
 
-const getHeaderConfig = () => {
-    console.log('Path: getHeaderConfig');
-    var file = vscode.workspace.getConfiguration('CheckoutHeader');
+const getUserConfig = (id) => {
+    console.log('Path: getUserConfig');
+    var file = vscode.workspace.getConfiguration('CheckoutHeader').get(id);
     return file;
 };
 
 const getUserEmail = () => {
     console.log('Path: getUserEmail');
-    var name = getHeaderConfig().get('email') ||
+    var name = getUserConfig('email') ||
         'CheckSettings';
     return name;
 };
@@ -361,7 +361,7 @@ module.exports = {
     commentHeader,
     getCurrentHeader,
     getFileName,
-    getHeaderConfig,
+    getUserConfig,
     getUserEmail,
     getHistoryFileName,
     getHistoryFileStatus,

@@ -26,7 +26,7 @@ const handleHeader = (val) => {
 }
 
 const changedConfig = () => {
-    if (ft.getHeaderConfig().get('enableSFTP')) {
+    if (ft.getUserConfig('enableSFTP')) {
         vscode.workspace.onDidSaveTextDocument(ft.sftpSyncSave);
         vscode.workspace.onDidChangeTextDocument(ft.sftpSyncGet);
     }
@@ -45,7 +45,7 @@ function activate(context) {
 	context.subscriptions.push(checkInHeader);
     context.subscriptions.push(checkOutHeader);
     vscode.workspace.onDidChangeConfiguration(changedConfig);
-    console.log("enableSFTP = "+ft.getHeaderConfig().get('enableSFTP'));
+    console.log("enableSFTP = "+ft.getUserConfig('enableSFTP'));
 }
 exports.activate = activate;
 
