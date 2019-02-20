@@ -61,7 +61,7 @@ Header overwrites text that interferes with it.
 
 ## Release Notes
 
-## [1]
+## [1.0]
 **1.0.1**
 
     -Initial release
@@ -82,9 +82,17 @@ Header overwrites text that interferes with it.
 
     -Cannot check-in if same user did not checkout (Overwrite option available)
 
+## [1.1]
+
 **1.1.0**
 
     -Realeased colored title bar option
     -Disabled SFTP sync for now (use suggested settings)
-    
+
+  **1.1.1**
+
+    -Added an editor context menu to Check-In/Out
+    -Improved the way color applied
+    -Improved how the header is recognised by extension
+
 **Enjoy!**

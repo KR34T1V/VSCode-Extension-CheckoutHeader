@@ -27,3 +27,8 @@ All notable changes to the "checkoutheader" extension will be documented in this
     -Realeased colored title bar option
     -Disabled SFTP sync for now (use suggested settings)
   
+  **1.1.1**
+
+    -Added an editor context menu to Check-In/Out
+    -Improved the way color applied
+    -Improved how the header is recognised by extension
