@@ -1,6 +1,6 @@
 {
   "name": "checkoutheader",
-  "displayName": "Checkout Header",
+  "displayName": "Dreamweaver / Checkout Header",
   "author": "m4dm0nk3y",
   "publisher": "m4dm0nk3y",
   "description": "Useful header for managing files on a live server along side SFTP extension. Alternative to Dreamweaver for vscode!",
@@ -12,7 +12,10 @@
     "url": "https://github.com/M4DM0NK3Y/CheckoutHeader-VSCode-Extension.git"
   },
   "keywords": [
-    "Checkout",
+    "Check Out",
+    "Check In",
+    "Check-Out",
+    "Check-In",
     "Dreamweaver"
   ],
   "bugs": {
@@ -49,12 +52,12 @@
     "commands": [
       {
         "command": "CheckoutHeader.out",
-        "title": "CheckoutHeader: Insert Fresh Header",
+        "title": "CheckoutHeader: Check-Out",
         "when": "editorTextFocus"
       },
       {
         "command": "CheckoutHeader.in",
-        "title": "CheckoutHeader: Insert Fresh Header",
+        "title": "CheckoutHeader: Check-In",
         "when": "editorTextFocus"
       }
     ],
@@ -71,7 +74,19 @@
         "mac": "cmd+alt+i",
         "when": "editorTextFocus"
       }
-    ]
+    ],
+    "menus": {
+        "editor/context": [
+            {
+                "command": "CheckoutHeader.in",
+                "group": "8_Other"
+            },
+            {
+                "command": "CheckoutHeader.out",
+                "group": "8_Other"
+            }
+        ]
+    }
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
