@@ -128,8 +128,22 @@ const getHeaderHistory = (header) => {
 const headerExists = (header) => {
     console.log('Path: headerExists');
 
-    var exists = getHistoryFileStatus(header);
-
+    var exists = header.match(new RegExp(
+                                            ['(\\*{81})(.*)',
+                                            '(\\*\\sFile:.{42}\\*.{6}\\|File Checked\\|.\\|.{8}\\*)',
+                                            '(.*)(\\*\\s{48}\\*.{30}\\*)(.*)',
+                                            '(\\*\\s{48}\\*.{30}\\*)(.*)',
+                                            '(\\*\\sLast-In:\\s.{38}\\*.{30}\\*)(.*)',
+                                            '(\\*\\s{3}In By:.{39}\\*.{30}\\*)(.*)',
+                                            '(\\*\\s{48}\\*.{30}\\*)(.*)',
+                                            '(\\*\\sLast-Out:.{38}\\*.{30}\\*)(.*)',
+                                            '(\\*\\s{3}Out By:.{38}\\*.{30}\\*)(.*)',
+                                            '(\\*\\s{48}\\*\\s{30}\\*)(.*)(\\*{81})'
+                                            ].join(''), 's'
+                                        )
+                                );
+    console.log(` =====> ${exists}`);
+    
     if (exists != null)
         return 1;
     return (0);
