@@ -39,6 +39,10 @@
           "type": "boolean",
           "description": "Sync with server on save?"
         },
+        "CheckoutHeader.autoSaveDisabled": {
+            "type": "boolean",
+            "description": "Stops Vscode from autosaving RECOMMENDED: when using SFTP sync!"
+          },
         "CheckoutHeader.enableTitleBarColors": {
           "type": "boolean",
           "description": "Change titlebar color based on file status?"
@@ -76,16 +80,16 @@
       }
     ],
     "menus": {
-        "editor/context": [
-            {
-                "command": "CheckoutHeader.in",
-                "group": "8_Other"
-            },
-            {
-                "command": "CheckoutHeader.out",
-                "group": "8_Other"
-            }
-        ]
+      "editor/context": [
+        {
+          "command": "CheckoutHeader.in",
+          "group": "8_Other"
+        },
+        {
+          "command": "CheckoutHeader.out",
+          "group": "8_Other"
+        }
+      ]
     }
   },
   "scripts": {

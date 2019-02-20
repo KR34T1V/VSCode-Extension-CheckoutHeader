@@ -47,6 +47,11 @@ const saveFile = () => {
     });
 };
 
+const autoSaveDisabled = () => {
+    if (getUserConfig('autoSaveDisabled'))
+        vscode.workspace.getConfiguration('files').update('autoSave', "off", false);
+}
+
 //export
 module.exports = {
     getFileName,

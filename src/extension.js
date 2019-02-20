@@ -144,8 +144,10 @@ function activate(context) {
 	context.subscriptions.push(checkInHeader);
     context.subscriptions.push(checkOutHeader);
 
+    vscode.window.onDidChangeActiveTextEditor(f_SFTP.sftpSyncGet);
     vscode.window.onDidChangeActiveTextEditor(handlerColoredTitleBars);
     vscode.workspace.onDidSaveTextDocument(handlerColoredTitleBars);
+    vscode.workspace.onDidSaveTextDocument(f_SFTP.sftpSyncSave);
 }
 
 //exports.activate = activate;

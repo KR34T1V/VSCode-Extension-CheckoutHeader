@@ -142,7 +142,6 @@ const headerExists = (header) => {
                                             ].join(''), 's'
                                         )
                                 );
-    console.log(` =====> ${exists}`);
     
     if (exists != null)
         return 1;
