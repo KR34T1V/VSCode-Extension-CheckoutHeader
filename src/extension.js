@@ -10,11 +10,11 @@ const t_Headers             = require('./templatesHeaders');
 
 //Functions
 const checkIn = () => handlerHeader(1).then(()=>{
-    f_Config.saveFile().then(handlerColoredTitleBars);
+    f_Config.saveFile();
 });
 
 const checkOut = () => handlerHeader(2).then(()=>{
-    f_Config.saveFile().then(handlerColoredTitleBars);
+    f_Config.saveFile();
 });
 
 const handlerColoredTitleBars = () => {
@@ -145,8 +145,10 @@ function activate(context) {
     context.subscriptions.push(checkOutHeader);
 
     vscode.window.onDidChangeActiveTextEditor(handlerColoredTitleBars);
+    vscode.workspace.onDidSaveTextDocument(handlerColoredTitleBars);
 }
-exports.activate = activate;
+
+//exports.activate = activate;
 
 // this method is called when your extension is deactivated
 function deactivate() {}
