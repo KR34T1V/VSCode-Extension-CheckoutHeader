@@ -163,9 +163,11 @@ const handlerChangeActiveTextEditor = () => {
 };
 
 const handlerDidSaveTextDocument = () => {
-    f_Config.autoSaveDisable();
-    f_SFTP.sftpSyncSave();
-    handlerColoredTitleBars();
+    if (f_Headers.headerExists(f_Headers.getCurrentHeader())){
+        f_Config.autoSaveDisable();
+        f_SFTP.sftpSyncSave();
+        handlerColoredTitleBars();
+    }
 }
 // this method is called when your extension is activated
 function activate(context) {
