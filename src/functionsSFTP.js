@@ -7,7 +7,7 @@ const f_Config  = require('./functionsConfig');
 const sftpSyncGet = () => {
     console.log('Path: sftpSyncGet');
     
-    if (f_Config.getUserConfig('CheckoutHeader.enableSFTP')){
+    if (f_Config.getUserConfig('enableSFTP')){
         vscode.commands.executeCommand('sftp.download.activeFile').then((success, err) => {
             if (success){
                 console.log("CheckoutHeader: SFTP File Synced!");
@@ -24,7 +24,7 @@ const sftpSyncGet = () => {
 const sftpSyncSave = () => {
     console.log('Path: sftpSyncSave');
 
-    if (f_Config.getUserConfig('CheckoutHeader.enableSFTP')){
+    if (f_Config.getUserConfig('enableSFTP')){
         vscode.commands.executeCommand('sftp.upload.activeFile').then((success, err) => {
             if (success){
                 console.log("CheckoutHeader: SFTP File Uploaded!");

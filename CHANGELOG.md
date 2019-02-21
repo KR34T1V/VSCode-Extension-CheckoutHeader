@@ -42,3 +42,7 @@ All notable changes to the "checkoutheader" extension will be documented in this
     -Refining the Sync ability 
     -Added "htmlcfml" language compatibility
     -Fixed saving  after override not working
+
+**1.1.4**
+
+    -Fixed Sync not working

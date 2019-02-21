@@ -108,4 +108,8 @@ Header overwrites text that interferes with it.
     -Added "htmlcfml" language compatibility
     -Fixed saving  after override not working
 
+**1.1.4**
+
+    -Fixed Sync not working
+
 **Enjoy!**
