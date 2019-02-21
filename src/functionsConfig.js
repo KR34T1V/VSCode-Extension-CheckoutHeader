@@ -47,8 +47,13 @@ const saveFile = () => {
     });
 };
 
-const autoSaveDisabled = () => {
-    if (getUserConfig('autoSaveDisabled'))
+const autoSaveDisable = () => {
+    console.log('Path: autoSaveDisable');
+
+    console.log(getUserConfig('autoSaveDisable'));
+    
+    
+    if (getUserConfig('autoSaveDisable'))
         vscode.workspace.getConfiguration('files').update('autoSave', "off", false);
 }
 
@@ -57,5 +62,6 @@ module.exports = {
     getFileName,
     getUserConfig,
     getUserEmail,
-    saveFile
+    saveFile,
+    autoSaveDisable
 }

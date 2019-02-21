@@ -157,6 +157,16 @@ const handlerCheckOut = () => {
     
 };
 
+const handlerChangeActiveTextEditor = () => {
+    f_SFTP.sftpSyncGet();
+    handlerColoredTitleBars();
+};
+
+const handlerDidSaveTextDocument = () => {
+    f_Config.autoSaveDisable();
+    f_SFTP.sftpSyncSave();
+    handlerColoredTitleBars();
+}
 // this method is called when your extension is activated
 function activate(context) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
@@ -168,10 +178,8 @@ function activate(context) {
 	context.subscriptions.push(checkInHeader);
     context.subscriptions.push(checkOutHeader);
 
-    vscode.window.onDidChangeActiveTextEditor(f_SFTP.sftpSyncGet);
-    vscode.window.onDidChangeActiveTextEditor(handlerColoredTitleBars);
-    vscode.workspace.onDidSaveTextDocument(handlerColoredTitleBars);
-    vscode.workspace.onDidSaveTextDocument(f_SFTP.sftpSyncSave);
+    vscode.window.onDidChangeActiveTextEditor(handlerChangeActiveTextEditor);
+    vscode.workspace.onDidSaveTextDocument(handlerDidSaveTextDocument);
 }
 
 //exports.activate = activate;
