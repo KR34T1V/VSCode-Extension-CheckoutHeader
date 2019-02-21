@@ -50,10 +50,15 @@ const handlerHeader = (select) => {
 
         if (f_Headers.supportHeaderLanguage(languageId)){
             if (select == 1)
-                handlerCheckIn();
+                handlerCheckIn().then((done) =>{
+                    if (done)
+                        res(1);
+                });
             else if (select == 2)
-                handlerCheckOut();
-            res(1);
+                handlerCheckOut().then((done) =>{
+                    if (done)
+                        res(1);
+                });
         }
         else{
             rej(`CheckoutHeader: Language <${languageId}> Not Supported!`);
@@ -65,72 +70,91 @@ const handlerHeader = (select) => {
 const handlerCheckIn = () => {
     console.log('Path: handlerCheckIn');
 
-    const activeTextEditor = vscode.window.activeTextEditor;
-    const document = activeTextEditor.document;
-    const languageId = document.languageId;
-    var     header              = f_Headers.getCurrentHeader();
-
-    if (f_Headers.headerExists(header)){
-        var history = f_Headers.getHeaderHistory(header);
-        var email   = f_Config.getUserEmail();
+    return new Promise((res)=>{
         
-        if (history.status != 1)
-            if (history.outBy == email)
-                f_Headers.checkInHeader(history);
-            else {
-                vscode.window.showInformationMessage(
-                    `This file is checked-out!\nBy: "${history.outBy}"\n Time: <${history.timeOut}>.`,
-                        'Overwrite', 'Cancel').then((selection) => {
-                            if (selection == 'Overwrite')
-                                f_Headers.checkInHeader(history);
-                        });
-            }
-        else {
-            vscode.window.showInformationMessage(`
-            This file is already checked-in!\nBy: "${history.inBy}"\nOn: <${history.timeIn}>.`,
-            'Overwrite', 'Cancel').then((selection) => {
-                if (selection == 'Overwrite')
+        const activeTextEditor = vscode.window.activeTextEditor;
+        const document = activeTextEditor.document;
+        const languageId = document.languageId;
+        var     header              = f_Headers.getCurrentHeader();
+    
+        if (f_Headers.headerExists(header)){
+            var history = f_Headers.getHeaderHistory(header);
+            var email   = f_Config.getUserEmail();
+            
+            if (history.status != 1)
+                if (history.outBy == email){
                     f_Headers.checkInHeader(history);
-            });
+                    res(1);
+                }
+                else {
+                    vscode.window.showInformationMessage(
+                        `This file is checked-out!\nBy: "${history.outBy}"\n Time: <${history.timeOut}>.`,
+                            'Overwrite', 'Cancel').then((selection) => {
+                                if (selection == 'Overwrite'){
+                                    f_Headers.checkInHeader(history);
+                                    res(1);
+                                }
+                            });
+                }
+            else {
+                vscode.window.showInformationMessage(`
+                This file is already checked-in!\nBy: "${history.inBy}"\nOn: <${history.timeIn}>.`,
+                'Overwrite', 'Cancel').then((selection) => {
+                    if (selection == 'Overwrite'){
+                        f_Headers.checkInHeader(history);
+                        res(1);
+                    }
+                });
+            }
         }
-    }
-    else {
-        activeTextEditor.edit((editor) => {
-            editor.insert(new vscode.Position(0, 0), f_Headers.commentHeader(
-                f_Headers.populateCheckInHeader(t_Headers.in).substring(1), languageId)+'\n');
-        });
-    }
+        else {
+            activeTextEditor.edit((editor) => {
+                editor.insert(new vscode.Position(0, 0), f_Headers.commentHeader(
+                    f_Headers.populateCheckInHeader(t_Headers.in).substring(1), languageId)+'\n');
+            });
+            res(1);
+        }
+    });
+
 };
 
 const handlerCheckOut = () => {
     console.log('Path: handlerCheckOut');
-    
-    const activeTextEditor = vscode.window.activeTextEditor;
-    const document = activeTextEditor.document;
-    const languageId = document.languageId;
-    var     header              = f_Headers.getCurrentHeader();
 
-    if (f_Headers.headerExists(header)){
-        var history = f_Headers.getHeaderHistory(header);
-        var email   = f_Config.getUserEmail();
-        
-        if (history.status != 2)
-            f_Headers.checkOutHeader(history);
-        else {
-            vscode.window.showInformationMessage(`
-            This file is already checked-out!\nBy: "${history.outBy}"\nOn: <${history.timeOut}>.`,
-            'Overwrite', 'Cancel').then((selection) => {
-                if (selection == 'Overwrite')
-                    f_Headers.checkOutHeader(history);
-            });
+    return new Promise((res)=>{
+
+        const activeTextEditor  = vscode.window.activeTextEditor;
+        const document          = activeTextEditor.document;
+        const languageId        = document.languageId;
+        var   header            = f_Headers.getCurrentHeader();
+    
+        if (f_Headers.headerExists(header)){
+            var history = f_Headers.getHeaderHistory(header);
+            
+            if (history.status != 2){
+                f_Headers.checkOutHeader(history);
+                res(1);
+            }
+            else {
+                vscode.window.showInformationMessage(`
+                This file is already checked-out!\nBy: "${history.outBy}"\nOn: <${history.timeOut}>.`,
+                'Overwrite', 'Cancel').then((selection) => {
+                    if (selection == 'Overwrite'){
+                        f_Headers.checkOutHeader(history);
+                        res(1);
+                    }
+                });
+            }
         }
-    }
-    else {
-        activeTextEditor.edit((editor) => {
-            editor.insert(new vscode.Position(0, 0), f_Headers.commentHeader(
-                f_Headers.populateCheckOutHeader(t_Headers.out).substring(1), languageId)+'\n');
-        });
-    }
+        else {
+            activeTextEditor.edit((editor) => {
+                editor.insert(new vscode.Position(0, 0), f_Headers.commentHeader(
+                    f_Headers.populateCheckOutHeader(t_Headers.out).substring(1), languageId)+'\n');
+            });
+            res(1);
+        }
+    });
+    
 };
 
 // this method is called when your extension is activated
