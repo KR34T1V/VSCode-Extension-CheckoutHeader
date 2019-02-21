@@ -37,7 +37,6 @@ It works locally or with the SFTP extension for live server edits.
 SFTP:
 https://github.com/liximomo/vscode-sftp.git
 
-## Extension Settings
 ### Suggested SFTP Settings
 ```
 {
@@ -50,12 +49,16 @@ https://github.com/liximomo/vscode-sftp.git
     ]
 }
 ```
+## Extension Settings
 This extension contributes the following settings:
-
-* `CheckoutHeader.email`: email@email.com (email to stamp onto header)
-* `CheckoutHeader.enableSFTP`: boolean (enables SFTP live sync) [Disabled]
-* `CheckoutHeader.enableTitleBarColors`: boolean (Changes title bar color based on file status)
-
+```
+{
+    "CheckoutHeader.email": "m4dm0nk3y.za@gmail.com",
+    "CheckoutHeader.enableSFTP": false,
+    "CheckoutHeader.enableTitleBarColors": false,
+    "CheckoutHeader.autoSaveDisabled": false
+}
+```
 ## Known Issues
 Header overwrites text that interferes with it.
 
