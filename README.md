@@ -112,4 +112,8 @@ Header overwrites text that interferes with it.
 
     -Fixed Sync not working
 
+**1.1.5**
+
+    -Fixed Disable Autosave not working correctly
+
 **Enjoy!**

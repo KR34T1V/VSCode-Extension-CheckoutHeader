@@ -46,3 +46,7 @@ All notable changes to the "checkoutheader" extension will be documented in this
 **1.1.4**
 
     -Fixed Sync not working
+
+**1.1.5**
+
+    -Fixed Disable Autosave not working correctly
