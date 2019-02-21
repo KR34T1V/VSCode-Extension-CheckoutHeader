@@ -99,9 +99,13 @@ Header overwrites text that interferes with it.
     -Improved how the header is recognised by extension
 
 **1.1.2**
+    -broken version
 
+**1.1.3**
+    
+    -Fixed "1.1.2" (rollback)
     -Refining the Sync ability 
-    -added htmlcfml language compatibility
+    -Added "htmlcfml" language compatibility
     -Fixed saving  after override not working
 
 **Enjoy!**
