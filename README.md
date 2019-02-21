@@ -118,6 +118,7 @@ Header overwrites text that interferes with it.
 
 **1.1.6**
 
-    -Added Yellow Color to titlebar. safe:(yellow) unsafe:(red) checked-in:(green)  
+    -Added Yellow Color to titlebar. safe:(yellow) unsafe:(red) checked-in:(green)
+    -SFTP Sync now will only put files that contain a header
 
 **Enjoy!**
