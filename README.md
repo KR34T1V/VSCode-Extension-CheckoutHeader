@@ -116,4 +116,8 @@ Header overwrites text that interferes with it.
 
     -Fixed Disable Autosave not working correctly
 
+**1.1.6**
+
+    -Added Yellow Color to titlebar. safe:(yellow) unsafe:(red) checked-in:(green)  
+
 **Enjoy!**

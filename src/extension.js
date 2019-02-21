@@ -27,6 +27,8 @@ const handlerColoredTitleBars = () => {
             var email   = f_Config.getUserEmail();
 
             if (history.status == 2 && history.outBy == email)
+                f_ColoredTitleBars.setColors(2);
+            else if (history.status == 1)
                 f_ColoredTitleBars.setColors(1);
             else
                 f_ColoredTitleBars.setColors(0);
@@ -34,8 +36,6 @@ const handlerColoredTitleBars = () => {
         else
             f_ColoredTitleBars.clearColors();
     }
-    else
-        f_ColoredTitleBars.clearColors();
 };
 
 const handlerHeader = (select) => {
@@ -180,6 +180,7 @@ function activate(context) {
 
     vscode.window.onDidChangeActiveTextEditor(handlerChangeActiveTextEditor);
     vscode.workspace.onDidSaveTextDocument(handlerDidSaveTextDocument);
+    vscode.window.onDidChangeWindowState(handlerChangeActiveTextEditor);
 }
 
 //exports.activate = activate;
