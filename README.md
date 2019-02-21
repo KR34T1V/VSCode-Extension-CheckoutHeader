@@ -40,8 +40,8 @@ https://github.com/liximomo/vscode-sftp.git
 ### Suggested SFTP Settings
 ```
 {
-    "uploadOnSave": true,
-    "downloadOnOpen": true,
+    "uploadOnSave": false,
+    "downloadOnOpen": false,
     "ignore": [
         "**/.vscode/**",
         "**/.git/**",
