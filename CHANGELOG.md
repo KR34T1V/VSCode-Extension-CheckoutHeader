@@ -32,3 +32,9 @@ All notable changes to the "checkoutheader" extension will be documented in this
     -Added an editor context menu to Check-In/Out
     -Improved the way color applied
     -Improved how the header is recognised by extension
+
+**1.1.2**
+
+    -Refining the Sync ability 
+    -added htmlcfml language compatibility
+    -Fixed saving  after override not working
