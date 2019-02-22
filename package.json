@@ -35,17 +35,13 @@
   "contributes": {
     "configuration": {
       "properties": {
-        "CheckoutHeader.enableSFTPAutoPull": {
+        "CheckoutHeader.enableSFTP": {
           "type": "boolean",
-          "description": "Sync local file with SFTP server on open?"
-        },
-        "CheckoutHeader.enableSFTPAutoPut": {
-          "type": "boolean",
-          "description": "Sync remote file with SFTP server on open?"
+          "description": "Sync with SFTP server?"
         },
         "CheckoutHeader.autoSaveDisable": {
           "type": "boolean",
-          "description": "Stops Vscode from autosaving RECOMMENDED: when using SFTP Auto Put!"
+          "description": "Stops Vscode from autosaving RECOMMENDED: when using SFTP sync!"
         },
         "CheckoutHeader.enableTitleBarColors": {
           "type": "boolean",
