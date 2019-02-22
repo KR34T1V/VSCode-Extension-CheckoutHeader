@@ -158,8 +158,10 @@ const handlerCheckOut = () => {
 };
 
 const handlerChangeActiveTextEditor = () => {
-    f_SFTP.sftpSyncGet();
-    handlerColoredTitleBars();
+    if (f_Headers.headerExists(f_Headers.getCurrentHeader())){
+        f_SFTP.sftpSyncGet();
+        handlerColoredTitleBars();
+    }
 };
 
 const handlerDidSaveTextDocument = () => {

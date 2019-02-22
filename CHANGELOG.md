@@ -55,3 +55,7 @@ All notable changes to the "checkoutheader" extension will be documented in this
 
     -Added Yellow Color to titlebar. safe:(yellow) unsafe:(red) checked-in:(green)  
     -SFTP Sync now will only put files that contain a header
+
+**1.1.7**
+
+    -Improved the upload Sync trigger
