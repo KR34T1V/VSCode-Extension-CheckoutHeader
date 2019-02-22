@@ -37,11 +37,11 @@
       "properties": {
         "CheckoutHeader.enableSFTP": {
           "type": "boolean",
-          "description": "Sync with SFTP server?"
+          "description": "Sync current active file with SFTP server?"
         },
         "CheckoutHeader.autoSaveDisable": {
           "type": "boolean",
-          "description": "Stops Vscode from autosaving RECOMMENDED: when using SFTP sync!"
+          "description": "Stops Vscode from autosaving RECOMMENDED: when using SFTP File sync!"
         },
         "CheckoutHeader.enableTitleBarColors": {
           "type": "boolean",
