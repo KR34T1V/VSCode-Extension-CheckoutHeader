@@ -59,3 +59,8 @@ All notable changes to the "checkoutheader" extension will be documented in this
 **1.1.7**
 
     -Improved the upload Sync trigger
+
+**1.1.8**
+
+    -Removed Ability to Over Write
+    -Fixed Titlebar color not changing when header is not present
