@@ -36,6 +36,8 @@ const handlerColoredTitleBars = () => {
         else
             f_ColoredTitleBars.clearColors();
     }
+    else
+            f_ColoredTitleBars.clearColors();
 };
 
 const handlerHeader = (select) => {
@@ -158,17 +160,17 @@ const handlerCheckOut = () => {
 };
 
 const handlerChangeActiveTextEditor = () => {
+    handlerColoredTitleBars();
     if (f_Headers.headerExists(f_Headers.getCurrentHeader())){
         f_SFTP.sftpSyncGet();
-        handlerColoredTitleBars();
     }
 };
 
 const handlerDidSaveTextDocument = () => {
+    handlerColoredTitleBars();
     if (f_Headers.headerExists(f_Headers.getCurrentHeader())){
         f_Config.autoSaveDisable();
         f_SFTP.sftpSyncSave();
-        handlerColoredTitleBars();
     }
 }
 // this method is called when your extension is activated
