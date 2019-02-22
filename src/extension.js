@@ -89,24 +89,12 @@ const handlerCheckIn = () => {
                     res(1);
                 }
                 else {
-                    vscode.window.showInformationMessage(
-                        `This file is checked-out!\nBy: "${history.outBy}"\n Time: <${history.timeOut}>.`,
-                            'Overwrite', 'Cancel').then((selection) => {
-                                if (selection == 'Overwrite'){
-                                    f_Headers.checkInHeader(history);
-                                    res(1);
-                                }
-                            });
+                    vscode.window.showWarningMessage(
+                        `This file is checked-out!\nBy: "${history.outBy}"\n Time: <${history.timeOut}>.`, 'OK');
                 }
             else {
-                vscode.window.showInformationMessage(`
-                This file is already checked-in!\nBy: "${history.inBy}"\nOn: <${history.timeIn}>.`,
-                'Overwrite', 'Cancel').then((selection) => {
-                    if (selection == 'Overwrite'){
-                        f_Headers.checkInHeader(history);
-                        res(1);
-                    }
-                });
+                vscode.window.showWarningMessage(`
+                This file is already checked-in!\nBy: "${history.inBy}"\nOn: <${history.timeIn}>.`, 'OK');
             }
         }
         else {
@@ -138,14 +126,8 @@ const handlerCheckOut = () => {
                 res(1);
             }
             else {
-                vscode.window.showInformationMessage(`
-                This file is already checked-out!\nBy: "${history.outBy}"\nOn: <${history.timeOut}>.`,
-                'Overwrite', 'Cancel').then((selection) => {
-                    if (selection == 'Overwrite'){
-                        f_Headers.checkOutHeader(history);
-                        res(1);
-                    }
-                });
+                vscode.window.showWarningMessage(`
+                This file is already checked-out!\nBy: "${history.outBy}"\nOn: <${history.timeOut}>.`, 'OK');
             }
         }
         else {
