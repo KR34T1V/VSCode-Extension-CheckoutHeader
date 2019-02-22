@@ -1,6 +1,7 @@
 "use strict"
 //Required
 const vscode                = require('vscode');
+const moment                = require('moment');
 const f_ColoredTitleBars    = require('./functionsColoredTitleBars');
 const f_Config              = require('./functionsConfig');
 const f_Headers             = require('./functionsHeaders');
@@ -149,17 +150,28 @@ const handlerChangeActiveTextEditor = () => {
 };
 
 const handlerDidSaveTextDocument = () => {
+    var header = f_Headers.getCurrentHeader();
+
     handlerColoredTitleBars();
-    var header = f_Headers.getCurrentHeader()
     if (f_Headers.headerExists(header)){
+        console.log(header);
+
         var email = f_Config.getUserEmail();
         var history = f_Headers.getHeaderHistory(header);
         
         f_Config.autoSaveDisable();
-        if (((history.status == 2) && (email == history.outBy)) || (history.status == 1)){
+        if ((history.status == 1) && (history.outBy == email) &&
+            (history.inBy == email) && (moment()
+            .format('YYYY/MM/DD, hh:mm:ss a') == history.timeIn))
+
             f_SFTP.sftpSyncSave();
-        }
+
+        else if(((history.status == 2) && (history.outBy == email)))
+
+            f_SFTP.sftpSyncSave();
+            
         else {
+
             f_SFTP.sftpSyncGet();
             vscode.window.showWarningMessage('Read Only File!');
         }
