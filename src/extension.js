@@ -150,9 +150,19 @@ const handlerChangeActiveTextEditor = () => {
 
 const handlerDidSaveTextDocument = () => {
     handlerColoredTitleBars();
-    if (f_Headers.headerExists(f_Headers.getCurrentHeader())){
+    var header = f_Headers.getCurrentHeader()
+    if (f_Headers.headerExists(header)){
+        var email = f_Config.getUserEmail();
+        var history = f_Headers.getHeaderHistory(header);
+        
         f_Config.autoSaveDisable();
-        f_SFTP.sftpSyncSave();
+        if (((history.status == 2) && (email == history.outBy)) || (history.status == 1)){
+            f_SFTP.sftpSyncSave();
+        }
+        else {
+            f_SFTP.sftpSyncGet();
+            vscode.window.showWarningMessage('Read Only File!');
+        }
     }
 }
 // this method is called when your extension is activated

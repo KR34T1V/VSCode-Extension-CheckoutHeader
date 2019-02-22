@@ -64,3 +64,7 @@ All notable changes to the "checkoutheader" extension will be documented in this
 
     -Removed Ability to Over Write
     -Fixed Titlebar color not changing when header is not present
+
+**1.1.9**
+
+    -Files are now safe from overwriting

@@ -1,6 +1,6 @@
 {
   "name": "checkoutheader",
-  "displayName": "Tourvest/Checkout Header",
+  "displayName": "Dreamweaver / Checkout Header",
   "author": "m4dm0nk3y",
   "publisher": "m4dm0nk3y",
   "description": "Useful header for managing files on a live server along side SFTP extension. Alternative to Dreamweaver for vscode!",

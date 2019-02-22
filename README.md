@@ -130,4 +130,8 @@ This extension contributes the following settings:
     -Removed Ability to Over Write
     -Fixed Titlebar color not changing when header is not present
 
+**1.1.9**
+
+    -Files are now safe from overwriting
+    
 **Enjoy!**
