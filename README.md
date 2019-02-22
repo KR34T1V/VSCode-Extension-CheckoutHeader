@@ -60,7 +60,7 @@ This extension contributes the following settings:
 }
 ```
 ## Known Issues
-Header overwrites text that interferes with it.
+(None)
 
 ## Release Notes
 
@@ -124,5 +124,5 @@ Header overwrites text that interferes with it.
 **1.1.7**
 
     -Improved the upload Sync trigger
-    
+
 **Enjoy!**
