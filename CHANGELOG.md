@@ -68,3 +68,8 @@ All notable changes to the "checkoutheader" extension will be documented in this
 **1.1.9**
 
     -Files are now safe from overwriting
+
+**1.1.10**
+
+    -Colors are Rechecked after Download
+    -Files now download befor checkout to ensure they are still checked in

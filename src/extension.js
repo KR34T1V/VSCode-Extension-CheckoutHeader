@@ -10,9 +10,12 @@ const t_Headers             = require('./templatesHeaders');
 
 
 //Functions
-const checkIn = () => handlerHeader(1).then(()=>{
+const checkIn = () => f_SFTP.sftpSyncGet().then(()=> {
+    handlerHeader(1).then(()=>{
     f_Config.saveFile();
+    });
 });
+    
 
 const checkOut = () => handlerHeader(2).then(()=>{
     f_Config.saveFile();
@@ -143,10 +146,13 @@ const handlerCheckOut = () => {
 };
 
 const handlerChangeActiveTextEditor = () => {
-    handlerColoredTitleBars();
     if (f_Headers.headerExists(f_Headers.getCurrentHeader())){
-        f_SFTP.sftpSyncGet();
+        f_SFTP.sftpSyncGet().then (()=>{
+            handlerColoredTitleBars();
+        });
     }
+    else 
+        handlerColoredTitleBars();
 };
 
 const handlerDidSaveTextDocument = () => {
