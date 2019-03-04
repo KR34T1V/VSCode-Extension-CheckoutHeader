@@ -10,6 +10,7 @@ const coldfusion = ['<!--- ', ' --->'];
 const demiliters = {
   'c': slashes,
   'cfml': coldfusion,
+  'cfc': coldfusion,
   'htmlcfml': coldfusion,
   'coffeescript': hashes,
   'cpp': slashes,

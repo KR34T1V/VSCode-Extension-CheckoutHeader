@@ -138,5 +138,9 @@ This extension contributes the following settings:
 
     -Colors are Rechecked after Download
     -Files now download befor checkout to ensure they are still checked in
+
+**1.1.11**
+
+    -Added cfc language support
     
 **Enjoy!**
