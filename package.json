@@ -4,7 +4,7 @@
   "author": "m4dm0nk3y",
   "publisher": "m4dm0nk3y",
   "description": "Useful header for managing files on a live server along side SFTP extension. Alternative to Dreamweaver for vscode!",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "license": "MIT",
   "icon": "logo.jpg",
   "repository": {
