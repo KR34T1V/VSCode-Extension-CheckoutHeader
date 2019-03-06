@@ -83,3 +83,7 @@ All notable changes to the "checkoutheader" extension will be documented in this
     -Added "cfchtml" language support
     -Added "cfmhtml" language support
     -Added "htmlcfml" language support
+
+**1.1.13**
+
+    -Fixed Cold Fusion Language Support

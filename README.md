@@ -148,5 +148,10 @@ This extension contributes the following settings:
     -Added "cfchtml" language support
     -Added "cfmhtml" language support
     -Added "htmlcfml" language support
+
+
+**1.1.13**
+
+    -Fixed Cold Fusion Language Support
     
 **Enjoy!**
