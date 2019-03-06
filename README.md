@@ -144,6 +144,7 @@ This extension contributes the following settings:
     -Added cfc language support
 
 **1.1.12**
+
     -Added "cfchtml" language support
     -Added "cfmhtml" language support
     -Added "htmlcfml" language support
