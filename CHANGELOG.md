@@ -76,4 +76,9 @@ All notable changes to the "checkoutheader" extension will be documented in this
 
 **1.1.11**
 
-    -Added cfc language support
+    -Added "cfc" language support
+
+**1.1.12**
+    -Added "cfchtml" language support
+    -Added "cfmhtml" language support
+    -Added "htmlcfml" language support

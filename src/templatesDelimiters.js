@@ -9,9 +9,10 @@ const coldfusion = ['<!--- ', ' --->'];
 
 const demiliters = {
   'c': slashes,
+  'cfmhtml': coldfusion,
   'cfml': coldfusion,
   'cfc': coldfusion,
-  'htmlcfml': coldfusion,
+  'cfchtml': coldfusion,
   'coffeescript': hashes,
   'cpp': slashes,
   'css': slashes,
@@ -20,6 +21,8 @@ const demiliters = {
   'go': slashes,
   'groovy': slashes,
   'haskell': dashes,
+  'htmlcfm': coldfusion,
+  'htmlcfml': coldfusion,
   'html': htmlstyle,
   'ini': semicolons,
   'jade': slashes,
