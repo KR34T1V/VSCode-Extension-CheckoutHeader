@@ -22,7 +22,7 @@ const demiliters = {
   'groovy': slashes,
   'haskell': dashes,
   'htmlcfm': coldfusion,
-  'htmlcfml': coldfusion,
+  'C': coldfusion,
   'html': htmlstyle,
   'ini': semicolons,
   'jade': slashes,
