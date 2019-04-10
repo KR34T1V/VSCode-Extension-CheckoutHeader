@@ -1,4 +1,4 @@
-##Beta Stage
+# Beta Stage
 
 ## Features
 Ctrl+Alt+I (Check-In File)
