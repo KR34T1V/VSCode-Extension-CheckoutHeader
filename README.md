@@ -62,7 +62,8 @@ This extension contributes the following settings:
 }
 ```
 ## Known Issues
-(None)
+SftpSync does not work well (Do not use!)
+    overwriting of work is a risk!
 
 ## Release Notes
 
